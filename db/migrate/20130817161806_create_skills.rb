@@ -4,6 +4,7 @@ class CreateSkills < ActiveRecord::Migration
 
       t.string :name
       t.string :label
+      t.integer :skill_cost
       t.integer :range
       t.boolean :offensive
 

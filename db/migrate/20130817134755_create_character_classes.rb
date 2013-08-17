@@ -4,7 +4,7 @@ class CreateCharacterClasses < ActiveRecord::Migration
       t.string :name, :null => false
       t.string :description
       t.boolean :playable
-      traits = ['attack','defence','health','skill','melee','ranged','evade','luck','speed']
+      traits = ['health','skill','attack','defence','melee','ranged','evade','luck','speed']
       traits.each do |trait|
         t.integer "init_#{trait}", :null => false 
         t.integer "#{trait}_mod", :null => false

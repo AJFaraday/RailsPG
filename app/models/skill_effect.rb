@@ -18,4 +18,22 @@ class SkillEffect < ActiveRecord::Base
     self.skill = s
   end
 
+  def roll(percent)
+    rand(100) <= percent
+  end
+
+  def use(source_character,target_character)
+    if evadeable and roll(target_character.evade)
+      puts "  #{name} evaded"
+    elsif defendable and roll(target_character.defence)
+      puts "  #{name} blocked"
+    else  
+      amount = source_character.send(related_trait)
+      amount *= magnitude
+      amount = (amount * (rand(100.0)/100.0)).to_i + 1 #plus one to ensure some effect
+      target_character.update_attribute target_trait, (target_character.send("#{target_trait}") + amount)
+      puts "  #{name}: #{target_trait} #{amount}"
+    end
+  end
+
 end
