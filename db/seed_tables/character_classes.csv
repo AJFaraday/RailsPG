@@ -1,0 +1,5 @@
+"name=","description=","playable=","init_health=","init_skill=","init_attack=","init_defence=","init_melee=","init_ranged=","init_evade=","init_luck=","init_speed=","health_mod=","skill_mod=","attack_mod=","defence_mod=","melee_mod=","ranged_mod=","evade_mod=","luck_mod=","speed_mod="
+"Fighter","A strong, melee fighter","“true”",30,10,5,3,5,1,2,3,1,25,5,5,4,5,1,2,2,1
+"Ranger","A devious, ranged figher","“true”",20,20,3,2,1,5,4,2,3,15,15,4,3,1,4,4,2,2
+"Wizard","A skillful magician","“true”",10,30,1,2,2,2,5,6,2,10,20,2,2,2,3,4,6,1
+"Snail","A weak beastie","“false”",5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
