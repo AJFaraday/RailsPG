@@ -1,0 +1,5 @@
+"name=","label=","range=","offensive=","add_to_classes"
+"character attack","Attack",0,1,"['Fighter',1,true],['Wizard',2,false],['Ranger',1,true]"
+"heal","Heal",4,,"['Wizard',2,true]"
+"snail spit","Spit",3,1,"['Snail',3,true]"
+"snail attack","Attack",1,1,"['Snail',3,true]"

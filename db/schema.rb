@@ -10,12 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130817134755) do
+ActiveRecord::Schema.define(:version => 20130817162643) do
+
+  create_table "character_class_skills", :force => true do |t|
+    t.integer "character_class_id"
+    t.integer "skill_id"
+    t.integer "from_level"
+    t.boolean "automatic"
+  end
 
   create_table "character_classes", :force => true do |t|
     t.string  "name",         :null => false
     t.string  "description"
-    t.boolean "playable",     :null => false
+    t.boolean "playable"
     t.integer "init_attack",  :null => false
     t.integer "attack_mod",   :null => false
     t.integer "init_defence", :null => false
@@ -34,6 +41,27 @@ ActiveRecord::Schema.define(:version => 20130817134755) do
     t.integer "luck_mod",     :null => false
     t.integer "init_speed",   :null => false
     t.integer "speed_mod",    :null => false
+  end
+
+  create_table "skill_effects", :force => true do |t|
+    t.string   "name"
+    t.string   "target_trait"
+    t.integer  "magnitude"
+    t.string   "related_trait"
+    t.boolean  "defendable"
+    t.boolean  "evadeable"
+    t.integer  "skill_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "skills", :force => true do |t|
+    t.string   "name"
+    t.string   "label"
+    t.integer  "range"
+    t.boolean  "offensive"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

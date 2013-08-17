@@ -6,9 +6,10 @@ require 'csv'
 
 seed_files = Dir["#{Rails.root}/db/seed_tables/*"]
 warnings = ""
+seed_files.sort!
 
 seed_files.each do |file_name|
-  class_name = file_name.split('/')[-1].split('.')[0].classify
+  class_name = file_name.split('/')[-1].split('-')[1].split('.')[0].classify
   data_class = class_name.constantize
 
   puts "Creating: #{class_name}"  
@@ -18,6 +19,7 @@ seed_files.each do |file_name|
   headers = data.shift
 
   data.each do |row|
+    puts row.inspect
     for_after_create = []
     record = data_class.new
     row.each_with_index do |cell,index|
