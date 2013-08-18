@@ -34,3 +34,11 @@ This session was:
 This is actually a bit of a coup for me, that it`s reached this stage so quickly.
 Eventually I hope to use range and speed, to make a dynamic, grid-based game, but this
 is a definite step fowards. And it`s 11:41 on a Saturday night. Don`t forget that!
+
+2013-08-18 - Afternoon
+----------------------
+
+This was mostly a testing session, using mocha to remove chance operations from rolls.
+
+Very little new development today, but yesterdays work is a lot more solid than it has been.
+The next step is probably a bit more of the battle scenario test.
