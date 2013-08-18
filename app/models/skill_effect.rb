@@ -18,21 +18,43 @@ class SkillEffect < ActiveRecord::Base
     self.skill = s
   end
 
+  # for use in-game
+
+  attr_accessor :target_character
+  attr_accessor :source_character
+
   def roll(percent)
     rand(100) <= percent
   end
 
-  def use(source_character,target_character)
-    if evadeable and roll(target_character.evade)
+  def roll_for_evade()
+    roll(target_character.evade)
+  end
+
+  def roll_for_defence()
+    roll(target_character.defence)
+  end
+
+  def roll_for_critical()
+    roll(source_character.send(related_trait))
+  end
+
+  def use(source,target)
+    self.source_character = source
+    self.target_character = target
+    if evadeable and roll_for_evade
       puts "  #{name} evaded"
-    elsif defendable and roll(target_character.defence)
-      puts "  #{name} blocked"
+    elsif defendable and roll_for_defence
+      puts "  #{name} defended"
     else  
       amount = source_character.send(related_trait)
       amount *= magnitude
-      amount = (amount * (rand(100.0)/100.0)).to_i + 1 #plus one to ensure some effect
+      critical = roll_for_critical
+      if critical
+        amount *= 1.5
+      end
       target_character.update_attribute target_trait, (target_character.send("#{target_trait}") + amount)
-      puts "  #{name}: #{target_trait} #{amount}"
+      puts "  #{"Critical " if critical}#{name}: #{target_trait} #{"+"if amount >= 0}#{amount}"
     end
   end
 

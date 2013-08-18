@@ -91,9 +91,15 @@ class Character < ActiveRecord::Base
   end
 
   def use_skill(skill,target_character)
-    skill = Skill.find(skill) if skill.is_a?(Integer)
-    target_character = Character.find(target_character) if target_character.is_a?(Integer)
-    skill.use(self,target_character)
+    if alive?
+      skill = Skill.find(skill) if skill.is_a?(Integer)
+      target_character = Character.find(target_character) if target_character.is_a?(Integer)
+      skill.use(self,target_character)
+      true
+    else
+      puts "#{name} can`t use skills while dead."
+      false
+    end
   end
 
   def dead?
