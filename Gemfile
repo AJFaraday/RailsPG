@@ -12,5 +12,5 @@ end
 
 gem 'jquery-rails'
 
-gem 'rspec'
-gem 'rspec-rails' 
+#gem 'rspec'
+gem 'mocha', :require => false

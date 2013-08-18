@@ -23,8 +23,10 @@ class Skill < ActiveRecord::Base
   end
 
   def use(source_character,target_character)
-    puts "#{source_character.name} uses #{label} on #{target_character.name}"
-    skill_effects.each{|effect|effect.use(source_character,target_character)}
+    message = "#{source_character.name} uses #{label} on #{target_character.name}\n"
+    puts message
+    skill_effects.each{|effect|message << effect.use(source_character,target_character)}
+    message
   end
 
 end

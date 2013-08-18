@@ -2,4 +2,4 @@
 "character attack","Attack",0,1,2,"['Fighter',1,true],['Wizard',2,false],['Ranger',1,true]"
 "heal","Heal",4,,7,"['Wizard',2,true]"
 "snail spit","Spit",3,1,3,"['Snail',3,true]"
-"snail attack","Attack",1,1,1,"['Snail',3,true]"
+"snail attack","Attack",1,1,1,"['Snail',1,true]"

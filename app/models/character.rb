@@ -12,13 +12,13 @@ class Character < ActiveRecord::Base
   TRAITS = ['attack','defence','melee','ranged','evade','luck','speed']
 
   
-  LEVEL_UP_INCREMENT = 2
+  LEVEL_UP_TARGET_MULTIPLIER = 2
 
   # initialize from class
 
-  before_create :copy_class
+  before_create :initialize_character
 
-  def copy_class
+  def initialize_character
     # TODO limit this to 100
     TRAITS.each do |trait|
       calc_trait = character_class.send("init_#{trait}")
@@ -27,11 +27,12 @@ class Character < ActiveRecord::Base
     end
     BARS.each do |bar|
       calc_bar = character_class.send("init_#{bar}")
-      calc_bar += chacter_class.send("#{bar}_mod") * (self.level - 1) if self.level > 1
+      calc_bar += character_class.send("#{bar}_mod") * (self.level - 1) if self.level > 1
       self.send("max_#{bar}=",calc_bar)
     end
     self.full_recover(true)
-    self.get_skills(true)
+    self.get_skills
+    self.set_init_exp
   end
 
   def full_recover(skip_save=false)
@@ -40,14 +41,19 @@ class Character < ActiveRecord::Base
     self.save unless skip_save
   end
 
+  def set_init_exp
+    self.exp = self.level_up_target*(LEVEL_UP_TARGET_MULTIPLIER**(self.level - 1))
+    self.level_up_target = self.exp * LEVEL_UP_TARGET_MULTIPLIER
+  end
+
   # Level Methods
 
-  before_save :check_for_level
+  before_update :check_for_level
 
   def check_for_level
     until self.exp <= self.level_up_target
       self.level_up(false)
-      self.level_up_target *= LEVEL_UP_INCREMENT 
+      self.level_up_target *= LEVEL_UP_TARGET_MULTIPLIER
     end
   end
 
@@ -63,12 +69,10 @@ class Character < ActiveRecord::Base
     self.full_recover(true)
   end
 
-  def get_skills(creating=false)
-    if creating
-      class_skills = character_class_skills(:conditions => ["from_level =< ? and automatic = ?",self.level,true])
-      class_skills.each do |class_skill|
-        self.skills << class_skill.skill
-      end
+  def get_skills
+    class_skills = character_class_skills.all(:conditions => ["from_level <= ? and automatic = ?",self.level,true])
+    class_skills.each do |class_skill|
+      self.skills << class_skill.skill
     end
   end 
 
