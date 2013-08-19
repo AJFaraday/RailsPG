@@ -42,3 +42,14 @@ This was mostly a testing session, using mocha to remove chance operations from 
 
 Very little new development today, but yesterdays work is a lot more solid than it has been.
 The next step is probably a bit more of the battle scenario test.
+
+2013-08-19 - Evening
+--------------------
+
+Once again, working until 11.
+
+This time it was a test-driven run at attribute modifying effects, namely reducing armour
+and increasing attack power. The test`s half-and-half completed and there`s a whole new model
+for effects in play. The whole project is definitely stepping forwards in slow, well tested lumps.
+
+I didn`t get round to a full scenario test, perhaps another time.
