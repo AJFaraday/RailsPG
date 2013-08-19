@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130817202629) do
+ActiveRecord::Schema.define(:version => 20130819202344) do
 
   create_table "character_class_skills", :force => true do |t|
     t.integer "character_class_id"
@@ -43,6 +43,12 @@ ActiveRecord::Schema.define(:version => 20130817202629) do
     t.integer "speed_mod",    :null => false
   end
 
+  create_table "character_skills", :force => true do |t|
+    t.integer "character_id"
+    t.integer "skill_id"
+    t.integer "level",        :default => 1
+  end
+
   create_table "characters", :force => true do |t|
     t.string   "name",                               :null => false
     t.integer  "character_class_id",                 :null => false
@@ -64,20 +70,28 @@ ActiveRecord::Schema.define(:version => 20130817202629) do
     t.datetime "updated_at",                         :null => false
   end
 
-  create_table "characters_skills", :force => true do |t|
-    t.integer "character_id"
-    t.integer "skill_id"
+  create_table "effects", :force => true do |t|
+    t.integer  "attribute_effect_id"
+    t.integer  "repeat_effect_id"
+    t.integer  "amount"
+    t.integer  "character_id"
+    t.integer  "turns_remaining"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "skill_effects", :force => true do |t|
     t.string   "name"
     t.string   "target_trait"
     t.integer  "magnitude"
+    t.float    "magnitude_mod"
     t.string   "related_trait"
     t.boolean  "defendable"
     t.boolean  "evadeable"
     t.integer  "skill_id"
     t.string   "type"
+    t.integer  "length"
+    t.float    "length_mod"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

@@ -5,6 +5,7 @@ class Character < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :character_class
  
+  has_many :effects
    
   has_many :character_skills
   has_many :skills, :through => :character_skills
