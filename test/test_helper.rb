@@ -8,28 +8,52 @@ class ActiveSupport::TestCase
 
 
   # stub collections to effect 
-  def stub_for_successful_effect
-    SkillEffect.any_instance.stubs(:roll_for_evade => false,
-                                   :roll_for_defence => false,
-                                   :roll_for_critical => false)
+  def stub_for_successful_bar_effect
+    BarEffect.any_instance.stubs(:roll_for_evade => false,
+                                 :roll_for_defence => false,
+                                 :roll_for_critical => false)
   end
 
-  def stub_for_critical
-    SkillEffect.any_instance.stubs(:roll_for_evade => false,
-                                   :roll_for_defence => false,
-                                   :roll_for_critical => true)
+  def stub_for_critical_bar_effect
+    BarEffect.any_instance.stubs(:roll_for_evade => false,
+                                 :roll_for_defence => false,
+                                 :roll_for_critical => true)
   end
 
-  def stub_for_evade
-    SkillEffect.any_instance.stubs(:roll_for_evade => true,
-                                   :roll_for_defence => false,
-                                   :roll_for_critical => false)
+  def stub_for_evade_bar_effect
+    BarEffect.any_instance.stubs(:roll_for_evade => true,
+                                 :roll_for_defence => false,
+                                 :roll_for_critical => false)
   end
 
-  def stub_for_defend
-    SkillEffect.any_instance.stubs(:roll_for_evade => false,
-                                   :roll_for_defence => true,
-                                   :roll_for_critical => false)
+  def stub_for_defend_bar_effect
+    BarEffect.any_instance.stubs(:roll_for_evade => false,
+                                 :roll_for_defence => true,
+                                 :roll_for_critical => false)
+  end
+
+  def stub_for_successful_attribute_effect
+    AttributeEffect.any_instance.stubs(:roll_for_evade => false,
+                                       :roll_for_defence => false,
+                                       :roll_for_critical => false)
+  end
+
+  def stub_for_critical_attribute_effect
+    AttributeEffect.any_instance.stubs(:roll_for_evade => false,
+                                       :roll_for_defence => false,
+                                       :roll_for_critical => true)
+  end
+
+  def stub_for_evade_attribute_effect
+    AttributeEffect.any_instance.stubs(:roll_for_evade => true,
+                                       :roll_for_defence => false,
+                                       :roll_for_critical => false)
+  end
+
+  def stub_for_defend_attribute_effect
+    AttributeEffect.any_instance.stubs(:roll_for_evade => false,
+                                       :roll_for_defence => true,
+                                       :roll_for_critical => false)
   end
 
 

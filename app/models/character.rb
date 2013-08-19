@@ -4,8 +4,11 @@ class Character < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :character_class
-  
-  has_and_belongs_to_many :skills
+ 
+   
+  has_many :character_skills
+  has_many :skills, :through => :character_skills
+
   delegate :character_class_skills, :playable, :to => :character_class
 
   BARS = ['health','skill']
@@ -75,6 +78,11 @@ class Character < ActiveRecord::Base
       self.skills << class_skill.skill
     end
   end 
+
+  # General Methods
+  def finish_turn
+    effects.each{|e|e.turn}
+  end
 
   # Battle Methods
 

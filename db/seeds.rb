@@ -34,7 +34,7 @@ seed_files.each do |file_name|
     for_after_create.each do |method_name,value|
       record.send(method_name,value)
     end
-    puts record.save!
+    record.save!
     puts record.inspect
     if record.respond_to?(:check)
       warning = record.check

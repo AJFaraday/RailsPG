@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130817202629) do
     t.boolean  "defendable"
     t.boolean  "evadeable"
     t.integer  "skill_id"
+    t.string   "type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

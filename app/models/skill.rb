@@ -5,6 +5,9 @@ class Skill < ActiveRecord::Base
 
   has_many :skill_effects
 
+  has_many :character_skills
+  has_many :characters, :through => :character_skills
+
   def check
     puts "Checking Skill: #{self.name}(#{self.label})"
     puts "  Skill is for character classes: #{character_classes.collect{|x|x.name}.join(', ')}"
