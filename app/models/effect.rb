@@ -30,7 +30,7 @@ class Effect < ActiveRecord::Base
 
   def has_skill_effect
     unless attribute_effect or repeat_effect
-      effects.add(:base, "should be connected to a skill effect.")
+      errors.add(:base, "should be connected to a skill effect.")
     end
   end
   

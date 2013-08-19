@@ -123,4 +123,22 @@ class Character < ActiveRecord::Base
     health > 0
   end  
 
+  # dynamic trait methods
+  Character::TRAITS.each do |trait|
+    define_method "base_#{trait}"do
+      self.send("#{trait}")
+    end
+
+    define_method "mod_#{trait}".to_sym do 
+      amount = self.send("#{trait}_variation")
+      return self.send("base_#{trait}") + amount
+    end
+
+    define_method "#{trait}_variation".to_sym do
+      modifying_effects = self.effects.all(:include => [:attribute_effect],
+                                           :conditions => ["skill_effects.target_trait = ?",
+                                                           trait.to_s])
+      modifying_effects.collect{|e|e.amount}.sum
+    end
+  end
 end
