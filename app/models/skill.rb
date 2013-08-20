@@ -31,6 +31,7 @@ class Skill < ActiveRecord::Base
       puts message
       message
     else
+      source_character.update_attribute(:skill, (source_character.skill - self.skill_cost))
       message = "#{source_character.name} uses #{label} on #{target_character.name}\n"
       puts message
       skill_effects.each{|effect|message << effect.use(source_character,target_character)}
