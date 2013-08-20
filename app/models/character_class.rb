@@ -35,6 +35,10 @@ class CharacterClass < ActiveRecord::Base
         problems = true
         warnings << "  Modifiers for Traits should add up to 20\n"
       end
+      if self.trait_modifiers.any?{|key,value|value > 5}
+        problems = true
+        warnings << "  Modifiers over 5 will exceed 100 on the level cap."
+      end
       if problems
         message = "Problems with CharacterClass: #{name}\n#{warnings}"
         puts message

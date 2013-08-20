@@ -17,6 +17,7 @@ class Character < ActiveRecord::Base
 
   
   LEVEL_UP_TARGET_MULTIPLIER = 2
+  LEVEL_CAP = 20
 
   # initialize from class
 
@@ -55,7 +56,7 @@ class Character < ActiveRecord::Base
   before_update :check_for_level
 
   def check_for_level
-    until self.exp <= self.level_up_target
+    until self.exp <= self.level_up_target and self.level <= LEVEL_CAP
       self.level_up(false)
       self.level_up_target *= LEVEL_UP_TARGET_MULTIPLIER
     end
@@ -138,7 +139,12 @@ class Character < ActiveRecord::Base
       modifying_effects = self.effects.all(:include => [:attribute_effect],
                                            :conditions => ["skill_effects.target_trait = ?",
                                                            trait.to_s])
-      modifying_effects.collect{|e|e.amount}.sum
+      amounts = modifying_effects.collect{|x|x.amount}
+      n = 0
+      amounts.each do |a| 
+        n += a
+      end
+      n
     end
   end
 end

@@ -83,59 +83,52 @@ class AttributeEffectTest < ActiveSupport::TestCase
     skill_effect.use(@enemy,@wizard)
     @wizard.reload
     assert_equal (initial_defence - 10), @wizard.mod_defence
-    2.times do 
-      @wizard.finish_turn
-      @wizard.reload
-      assert_equal (initial_defence - 10), @wizard.mod_defence
-    end
-    skill_effect.use(@enemy,@wizard)
-    1.times do
-      @wizard.finish_turn
-      @wizard.reload
-      assert_equal (initial_defence - 20), @wizard.mod_defence
-    end
-    skill_effect.use(@enemy,@wizard)
-    2.times do
-      @wizard.finish_turn
-      @wizard.reload
-      assert_equal (initial_defence - 10), @wizard.mod_defence
-    end
     @wizard.finish_turn
+    skill_effect.use(@enemy,@wizard)
+    @wizard.finish_turn
+    @wizard.reload
+    assert_equal 2, @wizard.effects.count
+    assert_equal (initial_defence - 20), @wizard.mod_defence
+    @wizard.finish_turn
+    @wizard.reload
+    assert_equal 1, @wizard.effects.count
+    assert_equal (initial_defence - 10), @wizard.mod_defence
+    2.times{@wizard.finish_turn}
     @wizard.reload
     assert_equal initial_defence, @wizard.mod_defence
   end
 
   def test_strengthen_non_evadeable
     stub_for_evade_attribute_effect
-    initial_attack = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
+    initial_attack = @wizard.attack
+    assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
-    message = skill_effect.use(@enemy,@wizard)
-    assert_equal "  Strengthen Attack: attack +2", message
+    message = skill_effect.use(@wizard,@wizard)
+    assert_equal "  Strengthen Attack: attack +60\n", message
     @wizard.reload
-    assert_equal (initial_attack + 2), @wizard.mod_defence
+    assert_equal (initial_attack + 60), @wizard.mod_attack
   end
 
   def test_strengthen_non_defendable
     stub_for_defend_attribute_effect
-    initial_attack = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
+    initial_attack = @wizard.attack
+    assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
-    message = skill_effect.use(@enemy,@wizard)
-    assert_equal "  Strengthen Attack: attack +10\n", message
+    message = skill_effect.use(@wizard,@wizard)
+    assert_equal "  Strengthen Attack: attack +60\n", message
     @wizard.reload
-    assert_equal (initial_attack + 10), @wizard.mod_defence
+    assert_equal (initial_attack + 60), @wizard.mod_attack
   end
 
   def test_strengthen_critical
     stub_for_critical_attribute_effect
-    initial_attack = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
+    initial_attack = @wizard.attack
+    assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
-    message = skill_effect.use(@enemy,@wizard)
-    assert_equal "  Critical Strengthen Attack: attack +15\n", message
+    message = skill_effect.use(@wizard,@wizard)
+    assert_equal "  Critical Strengthen Attack: attack +90\n", message
     @wizard.reload
-    assert_equal (initial_attack + 15), @wizard.mod_defence
+    assert_equal (initial_attack + 90), @wizard.mod_attack
   end
 
 
