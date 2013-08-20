@@ -4,9 +4,11 @@ class BarEffectTest < ActiveSupport::TestCase
 
   def setup
     @fighter = Character.create(:name => 'Fighter',
-                                :character_class => CharacterClass.find_by_name('Fighter'))
+                                :character_class => CharacterClass.find_by_name('Fighter'),
+                                :player => true)
     @wizard = Character.create(:name => 'Wizard',
-                               :character_class => CharacterClass.find_by_name('Wizard'))
+                               :character_class => CharacterClass.find_by_name('Wizard'),
+                               :player => true)
     @enemy = Character.create(:name => 'Snail',
                              :character_class => CharacterClass.find_by_name('Snail'))
   end

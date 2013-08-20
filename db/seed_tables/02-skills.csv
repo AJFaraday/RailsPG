@@ -6,3 +6,4 @@
 "snail spit","Spit",3,1,3,"['Snail',3,true]"
 "snail acid spit","Acid Spit",3,1,3,"['Snail',5,true]"
 "ranger poison","Poison Arrow",5,1,5,"['Ranger',5,true]"
+"cabbage spawn snail","Spawn Snail",0,1,10,"['Cabbage',1,true]"

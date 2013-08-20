@@ -6,7 +6,7 @@ class EffectTest < ActiveSupport::TestCase
     @skill_effect = AttributeEffect.find_by_name('Acid')
     @player = Character.create(:name => 'Wizard',
                                :character_class => CharacterClass.find_by_name('Wizard'),
-                               :level => 5)
+                               :level => 5,:player => true)
   end
 
   def test_life_span

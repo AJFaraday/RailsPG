@@ -4,7 +4,8 @@ class BattleTest < ActiveSupport::TestCase
 
   def test_snail_battle
     character = Character.create(:name => 'player',
-                                 :character_class => CharacterClass.find_by_name('Fighter'))
+                                 :character_class => CharacterClass.find_by_name('Fighter'),
+                                 :player => true)
     enemy = Character.create(:name => 'snail',
                              :character_class => CharacterClass.find_by_name('Snail'))
     puts "player turn"

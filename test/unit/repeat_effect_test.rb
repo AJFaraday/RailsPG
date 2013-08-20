@@ -5,7 +5,7 @@ class RepeatEffectTest < ActiveSupport::TestCase
   def setup
     @ranger = Character.create(:name => 'Ranger',
                                :character_class => CharacterClass.find_by_name('Ranger'),
-                               :level => 5)
+                               :level => 5,:player => true)
     @enemy = Character.create(:name => 'Snail',
                               :character_class => CharacterClass.find_by_name('Snail'), 
                               :level => 5)

@@ -5,7 +5,8 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def setup
     @wizard = Character.create(:name => 'Wizard',
                                :character_class => CharacterClass.find_by_name('Wizard'),
-                               :level => 5)
+                               :level => 5, 
+                               :player => true)
     @enemy = Character.create(:name => 'Snail',
                               :character_class => CharacterClass.find_by_name('Snail'), 
                               :level => 5)

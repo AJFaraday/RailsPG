@@ -4,6 +4,7 @@ class CreateCharacters < ActiveRecord::Migration
 
       t.string :name, :null => false
       t.integer :character_class_id, :null => false
+      t.boolean :player, :default => false
 
       t.integer :exp, :default => 0
       t.integer :level, :default => 1

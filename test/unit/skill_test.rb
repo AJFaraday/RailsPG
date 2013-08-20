@@ -18,13 +18,29 @@ class SkillTest < ActiveSupport::TestCase
 
   def test_use
     character = Character.create(:name => 'Player',
-                                 :character_class => CharacterClass.find_by_name('Fighter'))
+                                 :character_class => CharacterClass.find_by_name('Fighter'),:player => true)
     enemy = Character.create(:name => 'Snail',
                              :character_class => CharacterClass.find_by_name('Snail'))
      
     skill = character.skills.find_by_label('Attack')
     # character attacks enemy
     skill.use(character,enemy)
+  end
+
+  def test_insufficient_skill
+    character = Character.create(:name => 'Player',
+                                 :character_class => CharacterClass.find_by_name('Fighter'),:player => true)
+    enemy = Character.create(:name => 'Snail',
+                             :character_class => CharacterClass.find_by_name('Snail'))
+
+    skill = character.skills.find_by_label('Attack')
+    # character attacks enemy
+    character.update_attribute(:skill, 1)
+    initial_health = enemy.health
+    message = skill.use(character,enemy)
+    assert_equal "Player can't use Attack, not enough skill.", message
+    enemy.reload
+    assert_equal initial_health, enemy.health
   end
 
 end

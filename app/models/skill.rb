@@ -26,10 +26,16 @@ class Skill < ActiveRecord::Base
   end
 
   def use(source_character,target_character)
-    message = "#{source_character.name} uses #{label} on #{target_character.name}\n"
-    puts message
-    skill_effects.each{|effect|message << effect.use(source_character,target_character)}
-    message
+    if source_character.skill < self.skill_cost
+      message = "#{source_character.name} can't use #{label}, not enough skill."
+      puts message
+      message
+    else
+      message = "#{source_character.name} uses #{label} on #{target_character.name}\n"
+      puts message
+      skill_effects.each{|effect|message << effect.use(source_character,target_character)}
+      message
+    end
   end
 
 end

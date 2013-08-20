@@ -6,7 +6,8 @@ class CharacterTest < ActiveSupport::TestCase
   def test_initialise_character
     character_class = CharacterClass.find_by_name('Fighter')
     character = Character.create(:name => 'Brian', 
-                                 :character_class => character_class)
+                                 :character_class => character_class,
+                                 :player => true)
     
     # character has duplicated initial attributes from character_class
     assert_equal character.max_health, character_class.init_health
@@ -25,7 +26,7 @@ class CharacterTest < ActiveSupport::TestCase
     character_class = CharacterClass.find_by_name('Fighter')
     character = Character.create(:name => 'Brian',
                                  :character_class => character_class,
-                                 :level => 2)
+                                 :level => 2, :player => true)
     
     # character has duplicated initial attributes from character_class
     assert_equal character.max_health, (character_class.init_health + character_class.health_mod)
@@ -41,7 +42,7 @@ class CharacterTest < ActiveSupport::TestCase
     character_class = CharacterClass.find_by_name('Fighter')
     character = Character.create(:name => 'Brian',
                                  :character_class => character_class,
-                                 :level => 3)
+                                 :level => 3,:player => true)
     
     # character has duplicated initial attributes from character_class
     assert_equal character.max_health, (character_class.init_health + (character_class.health_mod * 2))
@@ -57,7 +58,7 @@ class CharacterTest < ActiveSupport::TestCase
     character_class = CharacterClass.find_by_name('Fighter')
     character = Character.create(:name => 'Brian',
                                  :character_class => character_class,
-                                 :level => 4)
+                                 :level => 4,:player => true)
 
     # character has duplicated initial attributes from character_class
     assert_equal character.max_health, (character_class.init_health + (character_class.health_mod * 3))
@@ -72,7 +73,7 @@ class CharacterTest < ActiveSupport::TestCase
   def test_initialise_character_gets_skills
     character_class = CharacterClass.find_by_name('Fighter')
     character = Character.create(:name => 'Brian',
-                                 :character_class => character_class)
+                                 :character_class => character_class,:player => true)
     assert_equal 1, character.skills.count
     assert character.skills.include?(Skill.find_by_name('character attack'))
   end
@@ -80,7 +81,7 @@ class CharacterTest < ActiveSupport::TestCase
   def test_initialise_character_gets_skills_by_level
     character_class = CharacterClass.find_by_name('Snail')
     character = Character.create(:name => 'Snail',
-                                 :character_class => character_class)
+                                 :character_class => character_class,:player => true)
     assert_equal 1, character.skills.count
     assert character.skills.include?(Skill.find_by_name('snail attack'))
     # at level 3 there will be two attacks
@@ -95,7 +96,7 @@ class CharacterTest < ActiveSupport::TestCase
   def test_level_up
     character_class = CharacterClass.find_by_name('Snail')
     character = Character.create(:name => 'Snail',
-                                 :character_class => character_class)
+                                 :character_class => character_class,:player => true)
     assert_equal 1, character.level
     assert_equal 10, character.exp 
     assert_equal 20, character.level_up_target

@@ -50,8 +50,9 @@ ActiveRecord::Schema.define(:version => 20130819202344) do
   end
 
   create_table "characters", :force => true do |t|
-    t.string   "name",                               :null => false
-    t.integer  "character_class_id",                 :null => false
+    t.string   "name",                                  :null => false
+    t.integer  "character_class_id",                    :null => false
+    t.boolean  "player",             :default => false
     t.integer  "exp",                :default => 0
     t.integer  "level",              :default => 1
     t.integer  "level_up_target",    :default => 10
@@ -59,15 +60,15 @@ ActiveRecord::Schema.define(:version => 20130819202344) do
     t.integer  "max_health"
     t.integer  "skill"
     t.integer  "max_skill"
-    t.integer  "attack",                             :null => false
-    t.integer  "defence",                            :null => false
-    t.integer  "melee",                              :null => false
-    t.integer  "ranged",                             :null => false
-    t.integer  "evade",                              :null => false
-    t.integer  "luck",                               :null => false
-    t.integer  "speed",                              :null => false
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.integer  "attack",                                :null => false
+    t.integer  "defence",                               :null => false
+    t.integer  "melee",                                 :null => false
+    t.integer  "ranged",                                :null => false
+    t.integer  "evade",                                 :null => false
+    t.integer  "luck",                                  :null => false
+    t.integer  "speed",                                 :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "effects", :force => true do |t|
@@ -90,12 +91,13 @@ ActiveRecord::Schema.define(:version => 20130819202344) do
     t.boolean  "evadeable"
     t.boolean  "repeat_defendable"
     t.boolean  "repeat_evadeable"
+    t.integer  "spawn_character_class_id"
     t.integer  "skill_id"
     t.string   "type"
     t.integer  "length"
     t.float    "length_mod"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "skills", :force => true do |t|
