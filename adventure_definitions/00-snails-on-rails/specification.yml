@@ -1,0 +1,75 @@
+name: "Snails on Rails"
+description: "You've gotta start somewhere, help me clear the snails from my garden."
+playspaces:
+  playspace_1:
+    name: Sunny Garden
+    rows: 5
+    columns: 5
+    filename: garden1.csv
+    enemies:
+      enemy_1:
+        name: Snail
+        class: Snail
+        level: 1
+        skills:
+          skill_1:
+            name: snail attack
+            level: 1
+    players:
+      player_1:
+        name: Brian the Snail Slayer
+        class: Fighter
+        level: 1
+    doors:
+      door_1:
+        destination: playspace_2
+  playspace_2:
+    name: Shady Garden
+    rows: 5
+    columns: 5
+    filename: garden2.csv
+    enemies:
+      enemy_1:
+        name: Rude Snail
+        class: Snail
+        level: 1
+        skills:
+          skill_1:
+            name: snail attack
+            level: 2
+          skill_2:
+            name: snail spit
+            level: 1
+      enemy_2:
+        name: Devious Snail
+        class: Snail
+        level: 3
+        skills:
+          skill_1:
+            name: snail attack
+            level: 1
+          skill_2:
+            name: snail acid spit
+            level: 1 
+    doors:
+      door_1:
+        destination: playspace_1
+      door_2: 
+        destination: playspace_3
+  playspace_3:
+    name: Scary Garden
+    rows: 5
+    columns: 5
+    filename: garden3.csv
+    enemies:
+      enemy_1:
+        name: Large Cabbage
+        class: Cabbage
+        level: 5
+        skills:
+          skill_1:
+            name: cabbage spawn snail
+            level: 1
+    doors:
+      door_1:
+        destination: playspace_2
