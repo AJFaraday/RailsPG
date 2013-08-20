@@ -53,3 +53,15 @@ and increasing attack power. The test`s half-and-half completed and there`s a wh
 for effects in play. The whole project is definitely stepping forwards in slow, well tested lumps.
 
 I didn`t get round to a full scenario test, perhaps another time.
+
+2013-08-20 - Evening
+--------------------
+
+Well, I`ve finished the battle system, basically. All the basic effects are there, in some form or another
+but I don`t think we can have a battle yet. Range is still meaningless, as is speed, so we need some space 
+to play in. So it`s time for more conceptual work. The next step, I hope, is to try out some level definitions,
+again, test driven, so I`ll define a level in text, then see where it takes me. 
+
+*Stated Aim!* define a level, then start to write tests, then models to make it work.
+
+
