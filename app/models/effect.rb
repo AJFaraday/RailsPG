@@ -7,6 +7,9 @@ class Effect < ActiveRecord::Base
 
   validate :has_skill_effect
 
+  delegate :repeat_defendable, :repeat_evadeable, :to => :repeat_effect, :allow_nil => true
+
+
   # attribute effects just stick around, repeat effects do something every turn
   def turn
     if attribute_effect or repeat_effect
@@ -23,8 +26,19 @@ class Effect < ActiveRecord::Base
   end
 
   def turn_effect
-    #TODO repeat effects
-    raise Error
+    if repeat_defendable and repeat_effect.roll_for_defence
+      @message = "  #{sef.name} defended"
+    elsif repeat_evadeable and repeat_effect.roll_for_evade
+      @message = "  #{self.name} evaded"
+    else
+      turn_amount = self.amount
+      critical = repeat_effect.roll_for_critical
+      turn_amount *= SkillEffect::CRITICAL_MULTIPLIER if critical
+      character.update_attribute(target_trait, (character.send(target_trait) + turn_amount)) 
+      @message = "  #{"Critical " if critical}#{repeat_effect.name}: #{target_trait} #{"+" if turn_amount > 0}#{turn_amount.to_i}\n"
+    end
+    puts @message
+    @message
   end
 
 
@@ -33,6 +47,15 @@ class Effect < ActiveRecord::Base
       errors.add(:base, "should be connected to a skill effect.")
     end
   end
-  
+
+  def target_trait
+    if repeat_effect
+      repeat_effect.target_trait
+    elsif attribute_effect
+      attribute_effect.target_trait
+    else
+      nil
+    end
+  end  
 
 end

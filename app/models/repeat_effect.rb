@@ -1,4 +1,4 @@
-class AttributeEffect < SkillEffect
+class RepeatEffect < SkillEffect
 
   def use(source,target)
     self.source_character = source
@@ -22,7 +22,7 @@ class AttributeEffect < SkillEffect
       Effect.create!(:character_id => target_character.id,
                      :amount => amount,
                      :turns_remaining => length, #TODO modify this by skill level
-                     :attribute_effect_id => self.id)
+                     :repeat_effect_id => self.id)
       puts message
       message 
     end

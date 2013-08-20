@@ -7,7 +7,7 @@ require 'mocha/setup'
 class ActiveSupport::TestCase
 
 
-  # stub collections to effect 
+  # stub collections for effects
   def stub_for_successful_bar_effect
     BarEffect.any_instance.stubs(:roll_for_evade => false,
                                  :roll_for_defence => false,
@@ -32,6 +32,7 @@ class ActiveSupport::TestCase
                                  :roll_for_critical => false)
   end
 
+ 
   def stub_for_successful_attribute_effect
     AttributeEffect.any_instance.stubs(:roll_for_evade => false,
                                        :roll_for_defence => false,
@@ -52,6 +53,31 @@ class ActiveSupport::TestCase
 
   def stub_for_defend_attribute_effect
     AttributeEffect.any_instance.stubs(:roll_for_evade => false,
+                                       :roll_for_defence => true,
+                                       :roll_for_critical => false)
+  end
+
+ 
+  def stub_for_successful_repeat_effect
+    RepeatEffect.any_instance.stubs(:roll_for_evade => false,
+                                       :roll_for_defence => false,
+                                       :roll_for_critical => false)
+  end
+
+  def stub_for_critical_repeat_effect
+    RepeatEffect.any_instance.stubs(:roll_for_evade => false,
+                                       :roll_for_defence => false,
+                                       :roll_for_critical => true)
+  end
+
+  def stub_for_evade_repeat_effect
+    RepeatEffect.any_instance.stubs(:roll_for_evade => true,
+                                       :roll_for_defence => false,
+                                       :roll_for_critical => false)
+  end
+
+  def stub_for_defend_repeat_effect
+    RepeatEffect.any_instance.stubs(:roll_for_evade => false,
                                        :roll_for_defence => true,
                                        :roll_for_critical => false)
   end

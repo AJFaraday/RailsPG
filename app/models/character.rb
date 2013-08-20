@@ -83,6 +83,7 @@ class Character < ActiveRecord::Base
 
   # General Methods
   def finish_turn
+    "#{name}: End of turn"
     effects.each{|e|e.turn}
   end
 
