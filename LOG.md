@@ -64,4 +64,13 @@ again, test driven, so I`ll define a level in text, then see where it takes me.
 
 *Stated Aim!* define a level, then start to write tests, then models to make it work.
 
+2013-08-20 - Even Later Evening
+-------------------------------
 
+I`ve just done the first part, a CSV and YML based adventure definition. The first being ingeniously named
+"Snails on Rails". It`s literally just putting together some of the elements I`ve already defined, and there
+is no code to load this into the database, or models for it to be loaded into. Or any real gameplay rules.
+
+But just having defined this in logical terms is a huge step forwards, it`s making the next few steps a whole
+lot clearer. Oh well, time to sleep (11:45 finish today), and tomorrow evening will probably be writing tests
+to get this into the system as described by the yaml.
