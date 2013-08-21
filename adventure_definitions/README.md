@@ -22,27 +22,24 @@ The specification should contain:
 * Name:
 * Description:
 * Playspaces
-** Playspace N
+** Name
+** Rows
+** Columns
+** Filename
+** Enemies
 *** Name
-*** Rows
-*** Columns
-*** Filename
-*** Enemies
-**** Enemy N
-***** Name
-***** Class
-***** level
-***** skills
-****** Skill N
-******* skill_name
-******* level
-*** Players
-**** Player N
-***** Name
-***** Class
-***** Level
-*** Doors
-**** Door N
-***** Destination (play space)
+*** Class
+*** level
+*** skills
+**** skill_name
+**** level
+** Players
+*** Name
+*** Class
+*** Level
+** Doors
+*** Destination (play space)
 
-Note: This really is just speculation at this stage - 2013-08-20
+Notes:
+* This really is just speculation at this stage - 2013-08-20
+* look at /adventure_definitions/00-snails-on-rails/specification.yml
