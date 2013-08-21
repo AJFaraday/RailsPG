@@ -31,6 +31,7 @@ The specification should contain:
 **** Enemy N
 ***** Name
 ***** Class
+***** level
 ***** skills
 ****** Skill N
 ******* skill_name
