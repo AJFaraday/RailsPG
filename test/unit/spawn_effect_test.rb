@@ -1,6 +1,6 @@
 require File.dirname(__FILE__)+'/../test_helper.rb'
 
-class Spawn EffectTest < ActiveSupport::TestCase
+class SpawnEffectTest < ActiveSupport::TestCase
 
   def setup
     @cabbage = Character.create(:name => 'Snail',

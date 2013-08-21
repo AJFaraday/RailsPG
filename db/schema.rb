@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819202344) do
+ActiveRecord::Schema.define(:version => 20130821185334) do
+
+  create_table "adventures", :force => true do |t|
+    t.string "name"
+    t.string "description"
+    t.string "folder_path"
+  end
 
   create_table "character_class_skills", :force => true do |t|
     t.integer "character_class_id"
@@ -54,6 +60,11 @@ ActiveRecord::Schema.define(:version => 20130819202344) do
     t.string   "name",                                  :null => false
     t.integer  "character_class_id",                    :null => false
     t.boolean  "player",             :default => false
+    t.integer  "game_id"
+    t.integer  "adventure_id"
+    t.integer  "level_id"
+    t.integer  "row"
+    t.integer  "column"
     t.integer  "exp",                :default => 0
     t.integer  "level",              :default => 1
     t.integer  "level_up_target",    :default => 10
@@ -72,6 +83,15 @@ ActiveRecord::Schema.define(:version => 20130819202344) do
     t.datetime "updated_at",                            :null => false
   end
 
+  create_table "doors", :force => true do |t|
+    t.integer "level_id"
+    t.integer "row"
+    t.integer "column"
+    t.integer "destination_level_id"
+    t.integer "destination_row"
+    t.integer "destination_column"
+  end
+
   create_table "effects", :force => true do |t|
     t.integer  "attribute_effect_id"
     t.integer  "repeat_effect_id"
@@ -80,6 +100,15 @@ ActiveRecord::Schema.define(:version => 20130819202344) do
     t.integer  "turns_remaining"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+  end
+
+  create_table "levels", :force => true do |t|
+    t.integer "adventure_id"
+    t.string  "internal_name"
+    t.string  "name"
+    t.integer "rows"
+    t.integer "columns"
+    t.string  "obstacle_positions"
   end
 
   create_table "skill_effects", :force => true do |t|

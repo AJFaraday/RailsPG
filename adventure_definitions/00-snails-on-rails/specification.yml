@@ -12,7 +12,7 @@ playspaces:
         class: Snail
         level: 1
         skills:
-          skill_1:
+          -
             name: snail attack
             level: 1
     players:
@@ -20,11 +20,15 @@ playspaces:
         name: Brian the Snail Slayer
         class: Fighter
         level: 1
+        skills:
+          -
+            name: character attack
+            level: 1
     doors:
       -
         destination: garden_2
-        column: 1
-        row: 5
+        destination_column: 1
+        destination_row: 5
   garden_2:
     name: Shady Garden
     rows: 5
@@ -56,12 +60,12 @@ playspaces:
     doors:
       -
         destination: garden_1
-        column: 5
-        row: 1
+        destination_column: 5
+        destination_row: 1
       -
         destination: garden_3
-        column: 1
-        row: 5
+        destination_column: 1
+        destination_row: 5
 
   garden_3:
     name: Scary Garden
@@ -80,5 +84,5 @@ playspaces:
     doors:
       -
         destination: garden_2
-        column: 1
-        row: 1
+        destination_column: 1
+        destination_row: 1

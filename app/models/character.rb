@@ -5,9 +5,9 @@ class Character < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :character_class
  
-  has_many :effects
+  has_many :effects, :dependent => :destroy
    
-  has_many :character_skills
+  has_many :character_skills, :dependent => :destroy
   has_many :skills, :through => :character_skills
 
   delegate :character_class_skills, :playable, :to => :character_class
@@ -36,7 +36,8 @@ class Character < ActiveRecord::Base
       self.send("max_#{bar}=",calc_bar)
     end
     self.full_recover(true)
-    self.get_skills
+    # TODO get skills by explicit definition or player choice
+    #self.get_skills
     self.set_init_exp
   end
 
@@ -64,7 +65,8 @@ class Character < ActiveRecord::Base
 
   def level_up(save=true)
     self.level += 1
-    self.get_skills
+    # TODO get skills by choice, enemies are explicitly set
+    #self.get_skills
     TRAITS.each do |trait|
       self.send("#{trait}=",self.send("#{trait}") + character_class.send("#{trait}_mod"))
     end

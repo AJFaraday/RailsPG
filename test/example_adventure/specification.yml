@@ -1,0 +1,45 @@
+name: 'test adventure'
+description: 'for testing'
+playspaces:
+  space_1:
+    name: 'space 1'
+    columns: 3
+    rows: 2
+    filename: space1.csv
+    enemies:
+      -
+        name: Enemy
+        class: Snail
+        level: 1
+        skills:
+          -
+            name: snail attack
+            level: 1
+    players:
+      -
+        name: Player
+        class: Fighter
+        level: 1
+        skills:
+          -
+            name: character attack
+            level: 1
+          -
+            name: heal
+            level: 1
+    doors:
+      -
+        destination: space_2
+        destination_column: 2
+        destination_row: 1
+  space_2:
+    name: 'space 2'
+    rows: 2
+    columns: 3
+    filename: space2.csv
+    doors:
+      -
+        destination: space_1
+        destination_column: 1
+        destination_row: 2
+

@@ -6,8 +6,9 @@ class CreateCharacters < ActiveRecord::Migration
       t.integer :character_class_id, :null => false
       t.boolean :player, :default => false
 
-      t.integer :game_id
-      t.integer :adventure_id
+      t.integer :game_id # specific game in play
+      t.integer :adventure_id # adventure, a template character
+      t.integer :level_id
       t.integer :row
       t.integer :column
 

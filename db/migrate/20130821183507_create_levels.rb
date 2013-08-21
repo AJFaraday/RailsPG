@@ -2,6 +2,7 @@ class CreateLevels < ActiveRecord::Migration
   def change
     create_table :levels do |t|
       t.integer :adventure_id
+      t.string :internal_name
       t.string :name
       t.integer :rows
       t.integer :columns
