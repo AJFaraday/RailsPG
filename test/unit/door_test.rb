@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__)+'/../test_helper.rb'
 
 class DoorTest < ActiveSupport::TestCase
   # test "the truth" do

@@ -74,3 +74,23 @@ is no code to load this into the database, or models for it to be loaded into. O
 But just having defined this in logical terms is a huge step forwards, it`s making the next few steps a whole
 lot clearer. Oh well, time to sleep (11:45 finish today), and tomorrow evening will probably be writing tests
 to get this into the system as described by the yaml.
+
+2013-08-21 - Evening
+--------------------
+
+I achieved a lot today, more or less. 
+
+I can now test all the unit tests as a single test task, without losing the database in the proces. There`s
+two new rake tasks:
+
+* rake test:with_load
+* rake test:without_load
+
+This will make the whole app a lot easier to manage.
+
+The other thing I achieved was a model structure for adventures, levels and doors (to connect them). These
+are a template for games to be played at a later date (I suspect Game will be an instance of Adventure). I
+loaded yesterdays speculative level definition structure (with only a few minor changes) into the new model
+structure and tested this huge loading task. 
+
+A couple of big achievements this evening, I`m really begining to think this might become a playable game.
