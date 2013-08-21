@@ -1,7 +1,7 @@
 name: "Snails on Rails"
 description: "You've gotta start somewhere, help me clear the snails from my garden."
 playspaces:
-  playspace_1:
+  garden_1:
     name: Sunny Garden
     rows: 5
     columns: 5
@@ -22,8 +22,10 @@ playspaces:
         level: 1
     doors:
       -
-        destination: playspace_2
-  playspace_2:
+        destination: garden_2
+        column: 1
+        row: 5
+  garden_2:
     name: Shady Garden
     rows: 5
     columns: 5
@@ -53,10 +55,15 @@ playspaces:
             level: 1 
     doors:
       -
-        destination: playspace_1
+        destination: garden_1
+        column: 5
+        row: 1
       -
-        destination: playspace_3
-  playspace_3:
+        destination: garden_3
+        column: 1
+        row: 5
+
+  garden_3:
     name: Scary Garden
     rows: 5
     columns: 5
@@ -72,4 +79,6 @@ playspaces:
             level: 1
     doors:
       -
-        destination: playspace_2
+        destination: garden_2
+        column: 1
+        row: 1

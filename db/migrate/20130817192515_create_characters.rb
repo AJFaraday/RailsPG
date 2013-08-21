@@ -6,6 +6,11 @@ class CreateCharacters < ActiveRecord::Migration
       t.integer :character_class_id, :null => false
       t.boolean :player, :default => false
 
+      t.integer :game_id
+      t.integer :adventure_id
+      t.integer :row
+      t.integer :column
+
       t.integer :exp, :default => 0
       t.integer :level, :default => 1
       t.integer :level_up_target, :default => 10
