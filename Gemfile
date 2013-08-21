@@ -14,3 +14,4 @@ gem 'jquery-rails'
 
 #gem 'rspec'
 gem 'mocha', :require => false
+gem 'test-unit'

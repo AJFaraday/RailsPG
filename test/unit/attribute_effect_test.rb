@@ -3,11 +3,11 @@ require File.dirname(__FILE__)+'/../test_helper.rb'
 class AttributeEffectTest < ActiveSupport::TestCase
 
   def setup
-    @wizard = Character.create(:name => 'Wizard',
+    @wizard = Character.create!(:name => 'Wizard',
                                :character_class => CharacterClass.find_by_name('Wizard'),
                                :level => 5, 
                                :player => true)
-    @enemy = Character.create(:name => 'Snail',
+    @enemy = Character.create!(:name => 'Snail',
                               :character_class => CharacterClass.find_by_name('Snail'), 
                               :level => 5)
   end
@@ -105,9 +105,9 @@ class AttributeEffectTest < ActiveSupport::TestCase
     assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
     message = skill_effect.use(@wizard,@wizard)
-    assert_equal "  Strengthen Attack: attack +60\n", message
+    assert_equal "  Strengthen Attack: attack +52\n", message
     @wizard.reload
-    assert_equal (initial_attack + 60), @wizard.mod_attack
+    assert_equal (initial_attack + 52), @wizard.mod_attack
   end
 
   def test_strengthen_non_defendable
@@ -116,9 +116,9 @@ class AttributeEffectTest < ActiveSupport::TestCase
     assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
     message = skill_effect.use(@wizard,@wizard)
-    assert_equal "  Strengthen Attack: attack +60\n", message
+    assert_equal "  Strengthen Attack: attack +52\n", message
     @wizard.reload
-    assert_equal (initial_attack + 60), @wizard.mod_attack
+    assert_equal (initial_attack + 52), @wizard.mod_attack
   end
 
   def test_strengthen_critical
@@ -127,9 +127,9 @@ class AttributeEffectTest < ActiveSupport::TestCase
     assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
     message = skill_effect.use(@wizard,@wizard)
-    assert_equal "  Critical Strengthen Attack: attack +90\n", message
+    assert_equal "  Critical Strengthen Attack: attack +78\n", message
     @wizard.reload
-    assert_equal (initial_attack + 90), @wizard.mod_attack
+    assert_equal (initial_attack + 78), @wizard.mod_attack
   end
 
 

@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__)+'/../test_helper.rb'
 
 class CharacterClassTest < ActiveSupport::TestCase
   # test "the truth" do
