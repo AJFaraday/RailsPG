@@ -94,3 +94,20 @@ loaded yesterdays speculative level definition structure (with only a few minor 
 structure and tested this huge loading task. 
 
 A couple of big achievements this evening, I`m really begining to think this might become a playable game.
+
+2013-08-22 - Late Evening
+-------------------------
+
+This evening's dev was held back by two things, I will be going on holiday in a couple of days, and probably
+won't proceed much further with the game or a couple of weeks, and I was out for a meal with my colleagues.
+
+So I took a step sideways and looked at the impending problem of line-of-sight. Which is a frustrating kind
+of problem, as it's very easy to do on paper, you just stick a ruler between two points and see if there's 
+an obstacle in the way. On a big, cunky grid it's a harder kind of problem to do it mathematically. 
+
+Thankfully a lunch-time thinking session on a board yeilded a result from my boss, you assume half-way points
+and draw a line in increments along and up in the right direction until you hit your destination, or an obstacle.
+
+So this evening I jotted it down into lib/line\_of\_sight.rb as a genericised method and tested it. 
+
+Seems pretty robust 
