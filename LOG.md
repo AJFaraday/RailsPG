@@ -98,12 +98,12 @@ A couple of big achievements this evening, I`m really begining to think this mig
 2013-08-22 - Late Evening
 -------------------------
 
-This evening's dev was held back by two things, I will be going on holiday in a couple of days, and probably
-won't proceed much further with the game or a couple of weeks, and I was out for a meal with my colleagues.
+This evening`s dev was held back by two things, I will be going on holiday in a couple of days, and probably
+won`t proceed much further with the game or a couple of weeks, and I was out for a meal with my colleagues.
 
 So I took a step sideways and looked at the impending problem of line-of-sight. Which is a frustrating kind
-of problem, as it's very easy to do on paper, you just stick a ruler between two points and see if there's 
-an obstacle in the way. On a big, cunky grid it's a harder kind of problem to do it mathematically. 
+of problem, as it`s very easy to do on paper, you just stick a ruler between two points and see if there`s 
+an obstacle in the way. On a big, cunky grid it`s a harder kind of problem to do it mathematically. 
 
 Thankfully a lunch-time thinking session on a board yeilded a result from my boss, you assume half-way points
 and draw a line in increments along and up in the right direction until you hit your destination, or an obstacle.
@@ -111,3 +111,16 @@ and draw a line in increments along and up in the right direction until you hit 
 So this evening I jotted it down into lib/line\_of\_sight.rb as a genericised method and tested it. 
 
 Seems pretty robust 
+
+2013-08-24 - evening and night
+------------------------------
+
+I`ve done an INSANE amount of coding tonight, after a crazy week at work. I had a 3 hour train journey so I decided to really get to grips with one of the problems which was always going to eat my time, a lot! Route finding. 
+
+I previously tried a whole project of route finding, which became a project of space-exploring, ants in a maze (www.github.com/ajfaraday/ants-in-a-maze)
+
+After spending a lot of time on the line of sight code, I had quite a logical head on, and a hot, crowded train to ignore, so I got my teeth stuck in, and continued when I got home. It`s now gone half past midnight. but I think I`ve cracked it. 
+
+My algorithm uses multiple strategies, compass_points towards the target, an aversion to repeat spaces and targeted back-tracking to work out the shortest path to the exit. It took me 5 hours, post work to get there. 
+
+I`m mentally exhausted as I write this log, but genuinely proud of myself!

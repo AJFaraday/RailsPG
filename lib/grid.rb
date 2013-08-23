@@ -48,10 +48,14 @@ class Grid
     else
       # simple calculation, saves some processing
       # the distance in one direction, plus the distance the other
-      @x_dist = (a[1] - b[1]).abs #just distance
-      @y_dist = (a[0] - b[0]).abs
-      @x_dist + @y_dist
+      simple_distance_from(a, b)
     end
+  end
+
+  def simple_distance_from(a, b)
+    @x_dist = (a[1] - b[1]).abs #just distance
+    @y_dist = (a[0] - b[0]).abs
+    @x_dist + @y_dist
   end
 
   def find_route_down_right(a, b)
@@ -198,7 +202,7 @@ class Grid
       @crumb = @visited[visited_index]
 
       if @crumb.nil?
-        raise "didn't find any more crumbs"
+        raise "Backtracked right to the start and still no new options. Target is probably unreachable."
       end
     end
     @pos = @crumb
