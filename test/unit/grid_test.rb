@@ -38,6 +38,7 @@ class EffectTest < ActiveSupport::TestCase
   def test_distance_round_obstacles
     #assert_equal 4, @grid.distance_from([1,1], [3,3]) # round obstacle, same as arithmetic
     assert_equal 4, @grid.distance_from([3,2], [5,2])
+    # currently this enters an invinite loop because it re-visits spaces
     assert_equal 5, @grid.distance_from([3,2], [5,3])
     assert_equal 6, @grid.distance_from([3,5], [5,3])
   end

@@ -54,7 +54,7 @@ class Grid
         else
           do_y_move
         end
-        sleep 1
+        sleep 1 #TODO stop this line when algorithm is finished and slow debugs are not needed
       end
       return @moved
     else
