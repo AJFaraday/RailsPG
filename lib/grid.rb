@@ -29,34 +29,21 @@ class Grid
   attr_accessor :y_moved
   attr_accessor :pos
   attr_accessor :moved # amount moved at all
+  attr_accessor :options
+  attr_accessor :go_up
+  attr_accessor :go_right
 
   def distance_from(a, b)
     a = [a.column, a.row] if !a.is_a?(Array) and a.respond_to?(:column) and a.respond_to?(:row)
     b = [b.column, b.row] if !b.is_a?(Array) and b.respond_to?(:column) and b.respond_to?(:row)
     raise "distance_from must accept arrays or models which respond to row and column" unless a.is_a?(Array) and b.is_a?(Array)
     if obstacles_between?(a, b)
-      # algorithm for getting round obstacles
-      @x_dist = (b[1] - a[1]) #distance and direction
-      @y_dist = (b[0] - a[0])
-      @x_move = @x_dist > 0 ? 1 : -1
-      @y_move = @y_dist > 0 ? 1 : -1
-                             # first up/down, then across
-      @y_moved = 0
-      @x_moved = 0
-      @pos = a
-      @moved = 0
-      @visited = []
-      until @pos == b
-        # in the right column
-        # or there's something in the way
-        if @y_moved == @y_dist or impassable?([@pos[0], @pos[1] + @y_move])
-          do_x_move
-        else
-          do_y_move
-        end
-        sleep 1 #TODO stop this line when algorithm is finished and slow debugs are not needed
-      end
-      return @moved
+      @options = []
+      find_route_up_right(a, b)
+      find_route_up_left(a, b)
+      find_route_down_left(a, b)
+      find_route_down_right(a, b)
+      return @options.min
     else
       # simple calculation, saves some processing
       # the distance in one direction, plus the distance the other
@@ -66,58 +53,134 @@ class Grid
     end
   end
 
+  def find_route_down_right(a, b)
+    puts "route finding #{a.inspect} to #{b.inspect} strategy down, right"
+    @go_up = false
+    @go_right = true
+    find_route(a, b)
+  end
+
+  def find_route_down_left(a, b)
+    puts "route finding #{a.inspect} to #{b.inspect} strategy down, left"
+    @go_up = false
+    @go_right = false
+    find_route(a, b)
+  end
+
+  def find_route_up_left(a, b)
+    puts "route finding #{a.inspect} to #{b.inspect} strategy up, left"
+    @go_up = true
+    @go_right = false
+    find_route(a, b)
+  end
+
+  def find_route_up_right(a, b)
+    puts "route finding #{a.inspect} to #{b.inspect} strategy up, right"
+    @go_up = true
+    @go_right = true
+    find_route(a, b)
+  end
+
+  def find_route(a, b)
+    reset_attributes(a, b)
+    until @pos == b
+      point_towards(b)
+      if @y_moved == @y_dist or impassable?([@pos[0] + @x_move, @pos[1] ])
+        do_x_move
+      else
+        do_y_move
+      end
+      #sleep 1 #TODO remove this line when algorithm is finished and slow debugs are not needed
+    end
+    @options << @moved
+  end
+
+  # try to go to the right row
   def do_x_move
     puts "doing x move from #{@pos.inspect}"
-    along_1 = [@pos[0],@pos[1] + @x_move]
+    along_1 = [@pos[0], @pos[1] + @x_move]
     # in the right row or direct move impassable
     if @x_moved == @x_dist or impassable?(along_1)
       #move up or down
-      down_1 = [@pos[0] + 1, @pos[1]]
-      up_1 = [@pos[0] - 1, @pos[1]]
-      if passable?(down_1)
-        @pos = down_1
-        @moved += 1
-      elsif passable?(up_1)
-        @pos = up_1
-        @moved += 1
+      if @go_up
+        if passable?(up_1)
+          move_up
+        elsif passable?(down_1)
+          move_down
+        else
+          if at_dead_end?(@pos)
+            do_dead_end_move
+          else
+            do_y_move
+          end
+        end
       else
-        do_dead_end_move
+        if passable?(down_1)
+          move_down
+        elsif passable?(up_1)
+          move_up
+        else
+          if at_dead_end?(@pos)
+            do_dead_end_move
+          else
+            do_y_move
+          end
+        end
       end
     else
-      @x_moved += @x_move
-      @pos = along_1
-      @moved += 1
+      if passable?(along_1)
+        @x_moved += @x_move
+        @pos = along_1
+        @visited << @pos
+        @moved += 1
+      end
     end
-    puts "ended at #{@pos.inspect}"
   end
 
+  # try to go to the right column
   def do_y_move
     puts "doing y move from #{@pos.inspect}"
-    up_or_down_1 = [@pos[0] + @y_move,@pos[1]]
+    up_or_down_1 = [@pos[0] + @y_move, @pos[1]]
     # in the right column or direct path is impassable
     if @y_moved == @y_dist or impassable?(up_or_down_1)
       #move right or left
-      right_1 = [@pos[0], @pos[1] + 1]
-      left_1 = [@pos[0], @pos[1] - 1]
-      if passable?(right_1)
-        @pos = right_1
-        @moved += 1
-      elsif passable?(left_1)
-        @pos = left_1
-        @moved += 1
+      if @go_right
+        if passable?(right_1)
+          move_right
+        elsif passable?(left_1)
+          move_left
+        else
+          if at_dead_end?(@pos)
+            do_dead_end_move
+          else
+            do_x_move
+          end
+        end
       else
-        do_dead_end_move
+        if passable?(left_1)
+          move_left
+        elsif passable?(right_1)
+          move_right
+        else
+          if at_dead_end?(@pos)
+            do_dead_end_move
+          else
+            do_x_move
+          end
+        end
       end
     else
-      @pos = up_or_down_1
-      @y_moved += @y_move
-      @moved += 1
-      puts "ended at #{@pos.inspect}"
+      if passable?(up_or_down_1)
+        @pos = up_or_down_1
+        @visited << @pos
+        @y_moved += @y_move
+        @moved += 1
+      end
     end
   end
 
   def do_dead_end_move
-    raise "Dead-end was hit"
+    raise "Dead-end was hit at #{@pos.inspect}\nVisited: #{@visited.inspect}\nObstacles:#{@obstacles.inspect}"
   end
 
   def obstacles_between?(a, b)
@@ -140,6 +203,77 @@ class Grid
 
   def passable?(x)
     !impassable?(x)
+  end
+
+  def at_dead_end?(x)
+    adjacent_to(x).none? { |coord| passable?(coord) }
+  end
+
+  def adjacent_to(x)
+    [
+      up_1,
+      down_1,
+      right_1,
+      left_1
+    ]
+  end
+
+  def reset_attributes(a, b)
+    @pos = a
+    point_towards(b)
+    @x_dist = (b[1] - a[1]) #distance and direction
+    @y_dist = (b[0] - a[0])
+    @y_moved = 0
+    @x_moved = 0
+    @moved = 0
+    @visited = [a]
+  end
+
+  def down_1
+    [@pos[0] + 1, @pos[1]]
+  end
+
+  def up_1
+    [@pos[0] - 1, @pos[1]]
+  end
+
+  def right_1
+    [@pos[0], @pos[1] + 1]
+  end
+
+  def left_1
+    [@pos[0], @pos[1] - 1]
+  end
+
+  def move_up
+    @pos = up_1
+    @visited << @pos
+    @moved += 1
+  end
+
+  def move_down
+    @pos = down_1
+    @visited << @pos
+    @moved += 1
+  end
+
+  def move_right
+    @pos = right_1
+    @visited << @pos
+    @moved += 1
+  end
+
+  def move_left
+    @pos = left_1
+    @visited << @pos
+    @moved += 1
+  end
+
+  def point_towards(target)
+    xx_dist = (target[1] - @pos[1]) #distance and direction
+    yy_dist = (target[0] - @pos[0])
+    @x_move = xx_dist > 0 ? 1 : -1
+    @y_move = yy_dist > 0 ? 1 : -1
   end
 
 end
