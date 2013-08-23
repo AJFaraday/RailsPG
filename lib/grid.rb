@@ -33,6 +33,7 @@ class Grid
   attr_accessor :go_up
   attr_accessor :go_right
 
+
   def distance_from(a, b)
     a = [a.column, a.row] if !a.is_a?(Array) and a.respond_to?(:column) and a.respond_to?(:row)
     b = [b.column, b.row] if !b.is_a?(Array) and b.respond_to?(:column) and b.respond_to?(:row)
@@ -85,10 +86,18 @@ class Grid
     reset_attributes(a, b)
     until @pos == b
       point_towards(b)
+      if @go_right
       if @y_moved == @y_dist or impassable?([@pos[0] + @x_move, @pos[1] ])
         do_x_move
       else
         do_y_move
+      end
+      else
+        if @x_moved == @x_dist or impassable?([@pos[0] , @pos[1] - @y_move ])
+          do_x_move
+        else
+          do_y_move
+        end
       end
       #sleep 1 #TODO remove this line when algorithm is finished and slow debugs are not needed
     end
@@ -180,7 +189,19 @@ class Grid
   end
 
   def do_dead_end_move
-    raise "Dead-end was hit at #{@pos.inspect}\nVisited: #{@visited.inspect}\nObstacles:#{@obstacles.inspect}"
+    puts "Dead-end was hit at #{@pos.inspect}"
+    visited_index = -1
+    @crumb = @visited[visited_index]
+    until !at_dead_end?(@crumb)
+      @moved -= 1
+      visited_index -= 1
+      @crumb = @visited[visited_index]
+
+      if @crumb.nil?
+        raise "didn't find any more crumbs"
+      end
+    end
+    @pos = @crumb
   end
 
   def obstacles_between?(a, b)
@@ -211,10 +232,10 @@ class Grid
 
   def adjacent_to(x)
     [
-      up_1,
-      down_1,
-      right_1,
-      left_1
+      [x[0]+1, x[1]],
+      [x[0]-1, x[1]],
+      [x[0], x[1]+1],
+      [x[0], x[1]-1]
     ]
   end
 

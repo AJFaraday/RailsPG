@@ -36,10 +36,10 @@ class GridTest < ActiveSupport::TestCase
 
   # Probably not going to solve this today
   def test_distance_round_obstacles
-    #assert_equal 4, @grid.distance_from([1,1], [3,3]) # round obstacle, same as arithmetic
-    #assert_equal 4, @grid.distance_from([3,2], [5,2])
+    assert_equal 4, @grid.distance_from([1,1], [3,3]) # round obstacle, same as arithmetic
+    assert_equal 4, @grid.distance_from([3,2], [5,2])
     assert_equal 5, @grid.distance_from([3,2], [5,3])
-    #assert_equal 6, @grid.distance_from([3,5], [5,1])
+    assert_equal 6, @grid.distance_from([3,5], [5,1])
   end
 
   # +-+-+-+-+-+
@@ -81,7 +81,7 @@ class GridTest < ActiveSupport::TestCase
                      :obstacles => [[2,2], [2,4],
                                     [3,2], [3,4],
                                     [4,2], [4,3], [4,4]])
-    assert 8, @grid.distance_between([1,3],[5,3])
+    assert_equal 8, @grid.distance_from([1,3],[5,3])
   end
 
 
