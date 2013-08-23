@@ -7,6 +7,7 @@ class SpawnEffectTest < ActiveSupport::TestCase
                                 :character_class => CharacterClass.find_by_name('Cabbage'), 
                                 :level => 5)
     @snail_class = CharacterClass.find_by_name('Snail')
+    @cabbage.get_skills
   end
 
   def test_cabbage_spawns_snail

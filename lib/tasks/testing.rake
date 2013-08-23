@@ -5,7 +5,6 @@ namespace :test do
   desc "Run all RailsPG tests but don't load data."
 
   Rake::TestTask.new("without_load") do |t|
-    #t.libs << "test"
     t.pattern = '{test/unit/*_test.rb}'
     t.verbose = true
   end

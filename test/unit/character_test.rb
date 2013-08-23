@@ -74,6 +74,7 @@ class CharacterTest < ActiveSupport::TestCase
     character_class = CharacterClass.find_by_name('Fighter')
     character = Character.create(:name => 'Brian',
                                  :character_class => character_class,:player => true)
+    character.get_skills
     assert_equal 1, character.skills.count
     assert character.skills.include?(Skill.find_by_name('character attack'))
   end
@@ -82,12 +83,14 @@ class CharacterTest < ActiveSupport::TestCase
     character_class = CharacterClass.find_by_name('Snail')
     character = Character.create(:name => 'Snail',
                                  :character_class => character_class,:player => true)
+    character.get_skills
     assert_equal 1, character.skills.count
     assert character.skills.include?(Skill.find_by_name('snail attack'))
     # at level 3 there will be two attacks
     character = Character.create(:name => 'Snail',
                                  :character_class => character_class, 
                                  :level => 3)
+    character.get_skills
     assert_equal 2, character.skills.count
     assert character.skills.include?(Skill.find_by_name('snail attack'))
     assert character.skills.include?(Skill.find_by_name('snail spit'))

@@ -6,9 +6,11 @@ class RepeatEffectTest < ActiveSupport::TestCase
     @ranger = Character.create(:name => 'Ranger',
                                :character_class => CharacterClass.find_by_name('Ranger'),
                                :level => 5,:player => true)
+    @ranger.get_skills
     @enemy = Character.create(:name => 'Snail',
                               :character_class => CharacterClass.find_by_name('Snail'), 
                               :level => 5)
+    @enemy.get_skills
   end
 
   def test_poison_added

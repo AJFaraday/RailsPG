@@ -19,9 +19,10 @@ class SkillTest < ActiveSupport::TestCase
   def test_use
     character = Character.create(:name => 'Player',
                                  :character_class => CharacterClass.find_by_name('Fighter'),:player => true)
+    character.get_skills
     enemy = Character.create(:name => 'Snail',
                              :character_class => CharacterClass.find_by_name('Snail'))
-     
+    enemy.get_skills
     skill = character.skills.find_by_label('Attack')
     # character attacks enemy
     skill.use(character,enemy)
@@ -30,9 +31,10 @@ class SkillTest < ActiveSupport::TestCase
   def test_insufficient_skill
     character = Character.create(:name => 'Player',
                                  :character_class => CharacterClass.find_by_name('Fighter'),:player => true)
+    character.get_skills
     enemy = Character.create(:name => 'Snail',
                              :character_class => CharacterClass.find_by_name('Snail'))
-
+    enemy.get_skills
     skill = character.skills.find_by_label('Attack')
     # character attacks enemy
     character.update_attribute(:skill, 1)

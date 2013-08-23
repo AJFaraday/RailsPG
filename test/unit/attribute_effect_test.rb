@@ -16,7 +16,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_defence_reduction
     stub_for_successful_attribute_effect
     initial_defence = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
     skill_effect = AttributeEffect.find_by_name('Acid')
     message = skill_effect.use(@enemy,@wizard)
     assert_equal "  Acid: defence -10\n", message
@@ -36,7 +35,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_defence_reduction_critical
     stub_for_critical_attribute_effect
     initial_defence = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
     skill_effect = AttributeEffect.find_by_name('Acid')
     message = skill_effect.use(@enemy,@wizard)
     assert_equal "  Critical Acid: defence -15\n", message
@@ -57,7 +55,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_defence_reduction_defended
     stub_for_defend_attribute_effect
     initial_defence = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
     skill_effect = AttributeEffect.find_by_name('Acid')
     message = skill_effect.use(@enemy,@wizard)
     assert_equal "  Acid defended\n", message
@@ -68,7 +65,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_defence_reduction_evaded
     stub_for_evade_attribute_effect
     initial_defence = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
     skill_effect = AttributeEffect.find_by_name('Acid')
     message = skill_effect.use(@enemy,@wizard)
     assert_equal "  Acid evaded\n", message
@@ -79,7 +75,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_defence_reduction_stacking
     stub_for_successful_attribute_effect
     initial_defence = @wizard.defence
-    assert @enemy.skills.include?(Skill.find_by_name('snail acid spit'))
     skill_effect = AttributeEffect.find_by_name('Acid')
     skill_effect.use(@enemy,@wizard)
     @wizard.reload
@@ -102,7 +97,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_strengthen_non_evadeable
     stub_for_evade_attribute_effect
     initial_attack = @wizard.attack
-    assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
     message = skill_effect.use(@wizard,@wizard)
     assert_equal "  Strengthen Attack: attack +52\n", message
@@ -113,7 +107,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_strengthen_non_defendable
     stub_for_defend_attribute_effect
     initial_attack = @wizard.attack
-    assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
     message = skill_effect.use(@wizard,@wizard)
     assert_equal "  Strengthen Attack: attack +52\n", message
@@ -124,7 +117,6 @@ class AttributeEffectTest < ActiveSupport::TestCase
   def test_strengthen_critical
     stub_for_critical_attribute_effect
     initial_attack = @wizard.attack
-    assert @wizard.skills.include?(Skill.find_by_name('bolster attack'))
     skill_effect = AttributeEffect.find_by_name('Strengthen Attack')
     message = skill_effect.use(@wizard,@wizard)
     assert_equal "  Critical Strengthen Attack: attack +78\n", message
