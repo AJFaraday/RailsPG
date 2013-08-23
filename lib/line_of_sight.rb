@@ -15,9 +15,13 @@ module LineOfSight
     until current_block == b
       x += x_div
       y += y_div
+
       current_block = [x.to_i,y.to_i]
       puts current_block.inspect
       return false if obstacles.include?(current_block)
+      return false if x == x.to_i and obstacles.include?([(x.to_i - 1),y.to_i])
+      return false if y == y.to_i and obstacles.include?([x.to_i,(y.to_i - 1)])
+      return false if x == x.to_i and y == y.to_i and obstacles.include?([(x.to_i - 1),(y.to_i - 1)])
     end
     true
   end

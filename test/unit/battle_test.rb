@@ -2,12 +2,16 @@ require File.dirname(__FILE__)+'/../test_helper.rb'
 
 class BattleTest < ActiveSupport::TestCase
 
+  # This is currently mostly for fun! disregard failures here
   def test_snail_battle
     character = Character.create(:name => 'player',
                                  :character_class => CharacterClass.find_by_name('Fighter'),
                                  :player => true)
+    character.get_skills
     enemy = Character.create(:name => 'snail',
-                             :character_class => CharacterClass.find_by_name('Snail'))
+                             :character_class => CharacterClass.find_by_name('Snail'),
+                             :level => 3)
+    enemy.get_skills
     puts "player turn"
     # skill options
     options = character.skill_options
