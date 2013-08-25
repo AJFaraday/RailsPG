@@ -97,8 +97,8 @@ class Grid
       else
         do_y_move
       end
-      #sleep 1 #TODO remove this line when algorithm is finished and slow debugs are not needed
     end
+    remove_loops
     @options << @moved
   end
 
@@ -140,6 +140,8 @@ class Grid
         @pos = along_1
         @visited << @pos
         @moved += 1
+      else
+        do_y_move
       end
     end
   end
@@ -182,6 +184,8 @@ class Grid
         @visited << @pos
         @y_moved += @y_move
         @moved += 1
+      else
+        do_x_move
       end
     end
   end
@@ -198,8 +202,10 @@ class Grid
       if @crumb.nil?
         raise "Backtracked right to the start and still no new options. Target is probably unreachable."
       end
-    end #
+    end
     @pos = @crumb
+    # remove all but 1 of dead end squares from path
+    @visited = @visited.first(@visited.index(@crumb)+2)
   end
 
   def obstacles_between?(a, b)
@@ -289,10 +295,48 @@ class Grid
   end
 
   def point_towards(target)
-    xx_dist = (target[1] - @pos[1]) #distance and direction
-    yy_dist = (target[0] - @pos[0])
+    xx_dist = (target[0] - @pos[0]) #distance and direction
+    yy_dist = (target[1] - @pos[1])
     @x_move = xx_dist > 0 ? 1 : -1
     @y_move = yy_dist > 0 ? 1 : -1
+  end
+
+  def has_loops?
+    if @visited.is_a?(Array)
+      i = 0
+      @visited.any? do |coord|
+        tmp_path = @visited.dup
+        tmp_path.delete_at(i+1)
+        tmp_path.delete_at(i-1)
+        result = tmp_path.any? do |cell|
+          adjacent_to(coord).include?(cell)
+        end
+        i += 1
+        result
+      end
+    else
+      false
+    end
+  end
+
+  def remove_loops
+    until !self.has_loops?
+      i = 0
+      @visited.each do |coord|
+
+        tmp_path = @visited.first(i)
+        tmp_path.delete_at(-1)
+        result = tmp_path.select do |cell|
+          adjacent_to(coord).include?(cell)
+        end
+        if result.any?
+          ((@visited.index(result.first) + 1)..(i - 1)).to_a.reverse.each { |x| @visited.delete_at(x) }
+          @moved -= ((@visited.index(result.first) + 1)..(i - 1)).to_a.size - 1
+          next
+        end
+        i += 1
+      end
+    end
   end
 
 end
