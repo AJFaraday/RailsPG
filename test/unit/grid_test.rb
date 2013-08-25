@@ -96,10 +96,61 @@ class GridTest < ActiveSupport::TestCase
     @grid = Grid.new(:columns => 3,
                      :rows => 3,
                      :obstacles => [[1, 2], [2, 2], [3, 2]])
-    assert_raises RuntimeError.new("Backtracked right to the start and still no new options. Target is probably unreachable.") do
+    assert_raises RuntimeError.new(Grid::NO_ROUTE_WARNING) do
       @grid.distance_from([1, 1], [3, 3])
     end
   end
 
+  #  1 2 3 4 5 6 7 8 9 10
+  # +-+-+-+-+-+-+-+-+-+-+
+  # |a| | | | | | | | |b|1     21 round spiral
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#| |#|#|#|#|#|#| |2
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#| |#| | | | |#| |3
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#| |#| |#| | |#| |4
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#| |#| |#| | |#| |5
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#| |#|t|#| | |#| |6
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#| |#|#|#| | |#| |7
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#| | | | | | |#| |8
+  # +-+-+-+-+-+-+-+-+-+-+
+  # | |#|#|#|#|#|#|#|#| |9
+  # +-+-+-+-+-+-+-+-+-+-+
+  # |d| | | | | | | | |c|10
+  # +-+-+-+-+-+-+-+-+-+-+
+  def test_distance_in_spiral
+    @grid = Grid.new(:columns => 10,
+                     :rows => 10,
+                     :obstacles => [
+                       [2,2],[2,4],[2,5],[2,6],[2,7],[2,8],[2,9],
+                       [3,2],[3,4],[3,9],
+                       [4,2],[4,4],[4,6],[4,9],
+                       [5,2],[5,4],[5,6],[5,9],
+                       [6,2],[6,4],[6,6],[6,9],
+                       [7,2],[7,4],[7,5],[7,6],[7,9],
+                       [8,2],[8,9],
+                       [9,2],[9,3],[9,4],[9,5],[9,6],[9,7],[9,8],[9,9]
+                     ])
+    t = [6,5]
+    a = [1,1]
+    b = [1,10]
+    c = [10,10]
+    d = [10,1]
 
+    assert_equal 23, @grid.distance_from(a, t)
+    assert_equal 28, @grid.distance_from(b, t)
+    assert_equal 37, @grid.distance_from(c, t)
+    assert_equal 32, @grid.distance_from(d, t)
+
+    # reverse direction should work
+    assert_equal 23, @grid.distance_from(t, a)
+    assert_equal 28, @grid.distance_from(t, b)
+    assert_equal 37, @grid.distance_from(t, c)
+    assert_equal 32, @grid.distance_from(t, d)
+  end
 end

@@ -5,6 +5,8 @@ class Grid
   attr_accessor :obstacles
 
 
+  NO_ROUTE_WARNING = "Backtracked right to the start and still no new options. Target is probably unreachable."
+
   def initialize(attrs={})
     attrs.each { |att, val| self.send("#{att}=", val) }
   end
@@ -91,17 +93,9 @@ class Grid
     until @pos == b
       point_towards(b)
       if @go_right
-      if @y_moved == @y_dist or impassable?([@pos[0] + @x_move, @pos[1] ])
         do_x_move
       else
         do_y_move
-      end
-      else
-        if @x_moved == @x_dist or impassable?([@pos[0] , @pos[1] - @y_move ])
-          do_x_move
-        else
-          do_y_move
-        end
       end
       #sleep 1 #TODO remove this line when algorithm is finished and slow debugs are not needed
     end
@@ -111,9 +105,9 @@ class Grid
   # try to go to the right row
   def do_x_move
     puts "doing x move from #{@pos.inspect}"
-    along_1 = [@pos[0], @pos[1] + @x_move]
-    # in the right row or direct move impassable
-    if @x_moved == @x_dist or impassable?(along_1)
+    along_1 = [@pos[0], @pos[1] + @y_move]
+    # in the right column or direct move impassable
+    if @y_moved == @y_dist or impassable?(along_1)
       #move up or down
       if @go_up
         if passable?(up_1)
@@ -153,8 +147,8 @@ class Grid
   # try to go to the right column
   def do_y_move
     puts "doing y move from #{@pos.inspect}"
-    up_or_down_1 = [@pos[0] + @y_move, @pos[1]]
-    # in the right column or direct path is impassable
+    up_or_down_1 = [@pos[0] + @x_move, @pos[1]]
+    # in the right row or direct path is impassable
     if @y_moved == @y_dist or impassable?(up_or_down_1)
       #move right or left
       if @go_right
@@ -204,7 +198,7 @@ class Grid
       if @crumb.nil?
         raise "Backtracked right to the start and still no new options. Target is probably unreachable."
       end
-    end
+    end #
     @pos = @crumb
   end
 
