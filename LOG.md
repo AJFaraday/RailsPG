@@ -124,3 +124,8 @@ After spending a lot of time on the line of sight code, I had quite a logical he
 My algorithm uses multiple strategies, compass_points towards the target, an aversion to repeat spaces and targeted back-tracking to work out the shortest path to the exit. It took me 5 hours, post work to get there. 
 
 I`m mentally exhausted as I write this log, but genuinely proud of myself!
+
+2013-08-25 - Afternoon
+----------------------
+
+In a hurry, no time to write logs now!
