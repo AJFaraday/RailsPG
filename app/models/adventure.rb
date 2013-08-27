@@ -36,7 +36,7 @@ class Adventure < ActiveRecord::Base
           row.each_with_index do |cell, column_index|
             coords = [row_index + 1, column_index + 1]
             if cell
-              case cell[0]
+              case cell[0..0]
                 when 'o'
                   level.obstacle_positions << coords
                 when 'p'
@@ -61,7 +61,8 @@ class Adventure < ActiveRecord::Base
                                               :character_class_id => CharacterClass.find_by_name(player_spec['class']).id,
                                               :player => true,
                                               :row => position[0],
-                                              :column => position[1])
+                                              :column => position[1],
+                                              :adventure_id => adventure.id)
             player_spec['skills'].each do |skill_spec|
               player.character_skills.create!(:level => skill_spec['level'],
                                               :skill_id => Skill.find_by_name(skill_spec['name']).id)
@@ -80,7 +81,8 @@ class Adventure < ActiveRecord::Base
                                              :character_class_id => CharacterClass.find_by_name(enemy_spec['class']).id,
                                              :player => false,
                                              :row => position[0],
-                                             :column => position[1])
+                                             :column => position[1], 
+                                             :adventure_id => adventure.id)
             enemy_spec['skills'].each do |skill_spec|
               enemy.character_skills.create!(:level => skill_spec['level'],
                                              :skill_id => Skill.find_by_name(skill_spec['name']).id)

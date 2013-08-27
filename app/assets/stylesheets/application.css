@@ -1,13 +1,26 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
- *= require_self
- *= require_tree .
- */
+
+#header-logo {
+  background-color: #aaffaa;
+  height: 70px;
+  border-radius: 10px 20px 10px 30px; 
+  margin: 10px;
+}
+
+#menu {
+  margin: 10px;
+  text-align: center;
+}
+
+#main_site {
+  margin:10px;
+  padding: 10px;
+  background-color: #D1C2B2 ;
+  border-radius: 20px 10px 30px 10px;
+}
+
+.adventure-summary {
+  padding:20px;
+  background-color: #EDE7E0;
+  border-radius: 10px 10px 40px 10px;
+
+}

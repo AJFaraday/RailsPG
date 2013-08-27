@@ -143,16 +143,16 @@ class GridTest < ActiveSupport::TestCase
     d = [10,1]
 
     #todo uncomment
-    #assert_equal 23, @grid.distance_from(a, t)
-    #assert_equal 28, @grid.distance_from(b, t)
+    assert_equal 23, @grid.distance_from(a, t)
+    assert_equal 28, @grid.distance_from(b, t)
     assert_equal 37, @grid.distance_from(c, t)
-    #assert_equal 32, @grid.distance_from(d, t)
+    assert_equal 32, @grid.distance_from(d, t)
 
     # reverse direction should work
-    #assert_equal 23, @grid.distance_from(t, a)
-    #assert_equal 28, @grid.distance_from(t, b)
-    #assert_equal 37, @grid.distance_from(t, c)
-    #assert_equal 32, @grid.distance_from(t, d)
+    assert_equal 23, @grid.distance_from(t, a)
+    assert_equal 28, @grid.distance_from(t, b)
+    assert_equal 37, @grid.distance_from(t, c)
+    assert_equal 32, @grid.distance_from(t, d)
   end
 
   # When the algorithm causes a loop back,

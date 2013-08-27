@@ -8,7 +8,6 @@ class CreateSkills < ActiveRecord::Migration
       t.integer :range
       t.boolean :offensive
 
-      t.timestamps
     end
   end
 end

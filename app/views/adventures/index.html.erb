@@ -1,0 +1,6 @@
+<h1>Adventures</h1>
+<p>Pick your adventure then play the game!</p>
+
+<% @adventures.each do |adventure| %>
+  <%= render :partial => 'adventure', :locals => {:adventure => adventure}%>
+<% end %>

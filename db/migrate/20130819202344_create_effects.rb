@@ -6,8 +6,6 @@ class CreateEffects < ActiveRecord::Migration
       t.integer :amount
       t.integer :character_id
       t.integer :turns_remaining
-
-      t.timestamps
     end
   end
 end

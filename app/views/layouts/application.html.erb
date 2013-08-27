@@ -3,12 +3,44 @@
 <head>
   <title>RubyPG</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "bootstrap.min", :media => "all" %>
+  <%= stylesheet_link_tag    "bootstrap-responsive.min", :media => "all" %>
+
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class=holder>
+    <div class=header>
+      <div class=row-fluid>
+        <div class="span8">
+          <div id='header-logo'>
+            Put an icon here, you moron!
+          </div>
+        </div>
+        <div class=span4>
+          <div id=menu>
+            <ul class="nav nav-pills nav-stacked">
+              <li class='<%= 'active' if params[:controller] == 'application' %>'>
+                <%= link_to 'Home', root_path, :disabled => (params[:controller] == 'application') %>
+              </li>
+              <li class='<%= 'active' if params[:controller] == 'adventures' %>'>
+                <%= link_to 'Adventures', adventures_path, :disabled => (params[:controller] == 'adventures') %>
+              </li>
+              <% if @current_game %>
+                <li class='<%= 'active' if params[:controller] == 'games' %>'>
+                  <%= link_to 'Play Game', _path, :disabled => (params[:controller] == 'games') %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<%= yield %>
-
+    <div id=main_site>
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>

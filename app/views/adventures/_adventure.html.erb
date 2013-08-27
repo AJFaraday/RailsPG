@@ -1,0 +1,35 @@
+<div class=adventure-summary>
+  <div class='row row-fluid'>
+    <div class=span4>
+      <div class=h3><%= adventure.name %></div>
+    </div>
+    <div class=span8>
+      <%= link_to 'More Details', adventure_path(adventure), :class => 'btn' %>
+      <%= link_to "Start Game", new_game_path(:adventure_id => adventure.id), :class => 'btn btn-success' %>
+    </div>
+  </div>
+  <div class='row row-fluid'>
+    <div class=span4>
+      <%= adventure.description %>
+    </div>
+    <div class=span8>
+      <table>
+        <tbody>
+          <tr>
+            <th>Levels:</th>
+            <td><%= adventure.levels.count %></td>
+          </tr>
+          <tr>
+            <th rowspan=<%= adventure.characters.count %>>Characters:</th>
+            <% adventure.characters.each_with_index do |character, index| %>
+              <%= raw "<tr>" unless index==0 %>
+              <td>
+                <%= character.name %> (<%= character.character_class.name %>)
+              </td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div> 
+  </div>
+</div>

@@ -18,8 +18,6 @@ class CreateSkillEffects < ActiveRecord::Migration
 
       t.integer :length
       t.float   :length_mod
-  
-      t.timestamps
     end
   end
 end

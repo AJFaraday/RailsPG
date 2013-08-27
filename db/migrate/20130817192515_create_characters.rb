@@ -26,7 +26,6 @@ class CreateCharacters < ActiveRecord::Migration
       traits.each do |trait|
         t.integer trait, :null => false
       end
-      t.timestamps
     end
   end
 end
