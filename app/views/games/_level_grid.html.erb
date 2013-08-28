@@ -1,0 +1,17 @@
+<div class='level_holer'>
+  <h3><%= level.name %></h3>
+  <table class='level_grid'>
+    <% level.rows.times do |row|%>
+      <tr>
+        <% row += 1 %>
+        <% level.columns.times do |column| %>
+          <% column += 1 %>
+          <% coord = [column, row] %>
+          <% klasses = "" %>         
+          <% klasses << "obstacle " if level.obstacle_positions.include?(coord) %>
+          <td class='<%= klasses %>'><div></div></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>

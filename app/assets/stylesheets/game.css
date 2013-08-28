@@ -1,0 +1,26 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+.level_holders{
+  padding: 30px;
+}
+
+table.level_grid{
+  width: 100%;
+  border: 1px solid black; 
+}
+
+table.level_grid tr {
+
+}
+
+table.level_grid > tr > td > div {{
+  height:70px;
+  width: 70px;
+}
+
+td.obstacle {
+  background-color: #555555;
+}

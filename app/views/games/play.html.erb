@@ -1,0 +1,8 @@
+<h1>Playing <%= @game.name %></h1>
+<div class='row row-fluid'>
+  <div class='span8'>
+    <% @game.levels.each do |level| %>
+      <%= render :partial => 'level_grid', :locals => {:level => level} %>
+    <% end %>
+  </div>
+</div>
