@@ -6,6 +6,8 @@ class CreateGames < ActiveRecord::Migration
       t.string :ip_address
       t.boolean :current
 
+      t.integer :current_character_id
+
       t.timestamps
     end
   end

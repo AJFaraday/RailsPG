@@ -102,8 +102,9 @@ ActiveRecord::Schema.define(:version => 20130827152622) do
     t.string   "name"
     t.string   "ip_address"
     t.boolean  "current"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "current_character_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "levels", :force => true do |t|

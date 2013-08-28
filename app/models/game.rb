@@ -4,7 +4,22 @@ class Game < ActiveRecord::Base
   
   has_many :levels, :through => :adventure
  
-  has_many :characters
+  has_many :characters do 
+    def player
+      find_by_player true
+    end
+
+    def enemy
+      find_by_player false
+    end 
+  end
+
+  belongs_to :current_character, :class_name => 'Character', 
+             :foreign_key => :current_character_id
+
+  has_one :current_level, 
+          :through => :current_character, 
+          :class_name => 'Level', :source => :level
   
   def Game.start_adventure(adventure,ip="localhost")
     adventure = Adventure.find(adventure) if adventure.is_a?(Integer) 

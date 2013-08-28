@@ -4,6 +4,7 @@ class Character < ActiveRecord::Base
   
   belongs_to :adventure
   belongs_to :game
+  belongs_to :level
 
   validates_presence_of :name
   validates_presence_of :character_class
