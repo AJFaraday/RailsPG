@@ -4,6 +4,8 @@ class Adventure < ActiveRecord::Base
   has_many :levels, :dependent => :destroy
   has_many :characters, :dependent => :destroy
 
+  has_many :games, :dependent => :destroy
+
   validates_uniqueness_of :folder_path
 
   attr_accessor :spec
@@ -34,7 +36,7 @@ class Adventure < ActiveRecord::Base
         layout = CSV.parse(layout)
         layout.each_with_index do |row, row_index|
           row.each_with_index do |cell, column_index|
-            coords = [row_index + 1, column_index + 1]
+            coords = [column_index + 1, row_index + 1]
             if cell
               case cell[0..0]
                 when 'o'
@@ -60,8 +62,8 @@ class Adventure < ActiveRecord::Base
                                               :level => player_spec['level'],
                                               :character_class_id => CharacterClass.find_by_name(player_spec['class']).id,
                                               :player => true,
-                                              :row => position[0],
-                                              :column => position[1],
+                                              :row => position[1],
+                                              :column => position[0],
                                               :adventure_id => adventure.id)
             player_spec['skills'].each do |skill_spec|
               player.character_skills.create!(:level => skill_spec['level'],
@@ -80,8 +82,8 @@ class Adventure < ActiveRecord::Base
                                              :level => enemy_spec['level'],
                                              :character_class_id => CharacterClass.find_by_name(enemy_spec['class']).id,
                                              :player => false,
-                                             :row => position[0],
-                                             :column => position[1], 
+                                             :row => position[1],
+                                             :column => position[0], 
                                              :adventure_id => adventure.id)
             enemy_spec['skills'].each do |skill_spec|
               enemy.character_skills.create!(:level => skill_spec['level'],
@@ -96,8 +98,8 @@ class Adventure < ActiveRecord::Base
             index -= 1
             door_spec = level_spec['doors'][index]
             door_specs << door_spec.merge({'level' => internal_name,
-                                           'row' => position[0],
-                                           'column' => position[1]})
+                                           'row' => position[1],
+                                           'column' => position[0]})
           end
         end
 

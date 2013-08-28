@@ -1,6 +1,9 @@
 class Character < ActiveRecord::Base
 
   belongs_to :character_class
+  
+  belongs_to :adventure
+  belongs_to :game
 
   validates_presence_of :name
   validates_presence_of :character_class

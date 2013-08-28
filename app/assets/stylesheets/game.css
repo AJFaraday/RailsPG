@@ -4,23 +4,53 @@
 */
 
 .level_holders{
-  padding: 30px;
+  padding: 300px;
 }
 
-table.level_grid{
-  width: 100%;
-  border: 1px solid black; 
+table.level_grid {
+  border: 1px solid black;
 }
 
-table.level_grid tr {
-
+table.level_grid > tbody > tr {
+  padding:0px;
+  margin: 0px;
 }
 
-table.level_grid > tr > td > div {{
+table.level_grid > tbody > tr > td {
+  padding:0px;
+  margin: 0px;
+}
+
+table.level_grid > tbody > tr > td > div {
   height:70px;
   width: 70px;
+  border: 1px solid #444444;
 }
 
-td.obstacle {
-  background-color: #555555;
+.obstacle {
+  background-color: black;
+}
+
+.wizard {
+  background-image:url('wizard.png');
+}
+
+.ranger {
+  background-image:url('ranger.png');
+}
+
+.fighter {
+  background-image:url('fighter.png');
+}
+
+.snail {
+  background-image:url('snail.png');
+}
+
+.cabbage {
+  background-image:url('cabbage.png');
+}
+
+.door {
+  background-image:url('door.png');
 }

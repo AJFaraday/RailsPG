@@ -1,4 +1,4 @@
-<div class='level_holer'>
+<div class='level_holder'>
   <h3><%= level.name %></h3>
   <table class='level_grid'>
     <% level.rows.times do |row|%>
@@ -8,8 +8,17 @@
           <% column += 1 %>
           <% coord = [column, row] %>
           <% klasses = "" %>         
+          <% id = "" %>
           <% klasses << "obstacle " if level.obstacle_positions.include?(coord) %>
-          <td class='<%= klasses %>'><div></div></td>
+          <% if character = level.characters.at(@current_game.id, row, column) %> 
+            <% klasses << "#{character.character_class.name.downcase} " %>
+            <% id << "character_#{character.id}" %>
+          <% end %>
+          <% if door = level.doors.at(row, column) %>
+            <% klasses << 'door' %>
+            <% id << "door_#{door.id}" %>
+          <% end %>
+	  <td><div id='<%= id %>' class='<%= klasses %>'></div></td>
         <% end %>
       </tr>
     <% end %>

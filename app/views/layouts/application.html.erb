@@ -2,11 +2,13 @@
 <html>
 <head>
   <title>RubyPG</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= stylesheet_link_tag    "bootstrap.min", :media => "all" %>
-  <%= stylesheet_link_tag    "bootstrap-responsive.min", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "bootstrap.min", :media => "all" %>
+  <%= stylesheet_link_tag "bootstrap-responsive.min", :media => "all" %>
+  <%= stylesheet_link_tag params[:controller][0..-2] %>
 
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag params[:controller][0..-2] %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -28,13 +30,13 @@
                 <%= link_to 'Adventures', adventures_path, :disabled => (params[:controller] == 'adventures') %>
               </li>
               <% if @running_games.any? %>
-                <li class='<%= 'active' if params[:controller] == 'games' %>'>
+                <li class='<%= 'active' if params[:controller] == 'games' and params[:action] == 'index'%>'>
                   <%= link_to 'Select Game', games_path, :disabled => (params[:controller] == 'games') %>
                 </li>
               <% end %>
               <% if @current_game %>
                 <li class='<%= 'active' if params[:controller] == 'games' and params[:action] == 'play' %>'>
-                  <%= link_to 'Play Game', play_game_path, :disabled => (params[:controller] == 'games') %>
+                  <%= link_to 'Play Game', play_game_path(@current_game), :disabled => (params[:controller] == 'games') %>
                 </li>
               <% end %>
             </ul>

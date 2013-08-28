@@ -1,9 +1,10 @@
 
 #header-logo {
   background-color: #aaffaa;
-  height: 70px;
+  height: 110px;
   border-radius: 10px 20px 10px 30px; 
   margin: 10px;
+  padding:10px;
 }
 
 #menu {
@@ -13,7 +14,7 @@
 
 #main_site {
   margin:10px;
-  padding: 10px;
+  padding: 30px;
   background-color: #D1C2B2 ;
   border-radius: 20px 10px 30px 10px;
 }
