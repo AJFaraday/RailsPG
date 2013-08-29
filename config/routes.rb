@@ -56,6 +56,7 @@ RubyPG::Application.routes.draw do
   resources :games, :only => [:index, :new] do
     member do
       get :play
+      post :move
       post :turn
     end
   end

@@ -24,8 +24,17 @@ class GamesController < ApplicationController
     end
   end
 
-  def turn
+  def move
+    # (player character)_id
+    # route (array of coordinates)
+    
+  end
 
+  def turn
+    # skill 
+    # target
+ 
+    # enemys in the same game and level move
   end
 
   def get_game
