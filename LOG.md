@@ -129,3 +129,10 @@ I`m mentally exhausted as I write this log, but genuinely proud of myself!
 ----------------------
 
 In a hurry, no time to write logs now!
+
+2013-08-30 - Morning
+--------------------
+
+My brother`s been around for the last week, on holiday, so I`ve had a little time to code but no time to write logs about it. Next, I`m going on holiday myself, so I won`t be coding much for the next week, if at all. 
+
+So, as a recap, I`ve started a simple web interface, still far from all there, but at least the level diagram (board) is in place and I`m starting to get action/turn logic. It`s still far from usable, but it`s starting to come together. Hopefully a week away walking will allow me to come back to it afresh when I get back to work.
