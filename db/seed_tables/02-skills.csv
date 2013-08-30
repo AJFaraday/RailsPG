@@ -1,5 +1,7 @@
 "name=","label=","range=","offensive=","skill_cost=","add_to_classes"
-"character attack","Attack",0,1,2,"['Fighter',1,true],['Wizard',2,true],['Ranger',1,true]"
+"fighter attack","Attack",1,1,2,"['Fighter',1,true]"
+"ranger attack","Attack",3,1,2,"['Ranger',1,true]"
+"wizard attack","Attack",1,1,2,"['Wizard',2,true]"
 "heal","Heal",4,,7,"['Wizard',1,true]"
 "bolster attack","Bolster Attack",4,,10,"['Wizard',5,true]"
 "snail attack","Attack",1,1,1,"['Snail',1,true]"

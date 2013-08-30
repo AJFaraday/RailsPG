@@ -5,4 +5,11 @@
       <%= render :partial => 'level_grid', :locals => {:level => level} %>
     <% end %>
   </div>
+  <div class='span4'>
+    <%= render :partial => 'turn_menu', :locals => {:character => @game.current_character} %>
+  </div>
 </div>
+
+<script type='text/javascript'>
+  show_level(<%= @game.current_character.level_id %>);
+</script>

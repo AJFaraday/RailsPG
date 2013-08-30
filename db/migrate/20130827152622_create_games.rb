@@ -5,6 +5,7 @@ class CreateGames < ActiveRecord::Migration
       t.string :name
       t.string :ip_address
       t.boolean :current
+      t.string :player_order
 
       t.integer :current_character_id
 

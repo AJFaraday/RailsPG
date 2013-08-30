@@ -4,15 +4,7 @@ class Game < ActiveRecord::Base
   
   has_many :levels, :through => :adventure
  
-  has_many :characters do 
-    def player
-      find_by_player true
-    end
-
-    def enemy
-      find_by_player false
-    end 
-  end
+  has_many :characters 
 
   belongs_to :current_character, :class_name => 'Character', 
              :foreign_key => :current_character_id
@@ -21,6 +13,9 @@ class Game < ActiveRecord::Base
           :through => :current_character, 
           :class_name => 'Level', :source => :level
   
+  serialize :player_order
+
+
   def Game.start_adventure(adventure,ip="localhost")
     adventure = Adventure.find(adventure) if adventure.is_a?(Integer) 
     raise "You need an adventure to start an adventure!" unless adventure.is_a?(Adventure)
@@ -30,7 +25,16 @@ class Game < ActiveRecord::Base
                         :ip_address => ip,
                         :current => true)
     game.clone_adventure_characters
+    game.set_player_order
     return game
+  end
+
+  def set_player_order
+    character_ids = self.characters.where(:player => true).order('speed desc').collect{|x|x.id}
+    self.update_attributes(
+      :player_order => character_ids,
+      :current_character_id => character_ids[0]
+    )
   end
 
   def clone_adventure_characters
@@ -46,5 +50,21 @@ class Game < ActiveRecord::Base
       end
     end
   end
+
+  def players
+    characters.where(:player => true)
+  end
+
+  def enemies
+    characters.where(:player => false)
+  end
+
+  def finish_turn
+    current_character.finish_turn
+    current_character.current_level.enemies.where(:game_id => self.id).each do |enemy|
+      enemy.automatic_turn
+    end
+  end
+  
 
 end

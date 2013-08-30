@@ -4,7 +4,7 @@ class Character < ActiveRecord::Base
   
   belongs_to :adventure
   belongs_to :game
-  belongs_to :level
+  belongs_to :current_level, :class_name => 'Level', :foreign_key => 'level_id'
 
   validates_presence_of :name
   validates_presence_of :character_class
@@ -14,7 +14,6 @@ class Character < ActiveRecord::Base
   has_many :character_skills, :dependent => :destroy
   has_many :skills, :through => :character_skills
 
-  delegate :character_class_skills, :playable, :to => :character_class
 
   BARS = ['health','skill']
   TRAITS = ['attack','defence','melee','ranged','evade','luck','speed']
@@ -26,6 +25,12 @@ class Character < ActiveRecord::Base
   # initialize from class
 
   before_create :initialize_character
+
+  attr_accessor :grid
+
+  def grid
+    @grid ||= self.level.grid
+  end
 
   def initialize_character
     # TODO limit this to 100
@@ -95,20 +100,32 @@ class Character < ActiveRecord::Base
 
   # Battle Methods
 
+  def coord
+    [self.column, self.row]
+  end
+
+  def can_see?(target)
+    target = Character.find(target) if target.is_a?(Integer)
+    (self.level_id == target.level_id and self.game_id == target.game_id and 
+     grid.line_of_sight_between(self.coord, target.coord))
+  end
+
   def skill_options
     skills.collect{|skill| [skill.label,skill.id]}
   end
 
   def skill_targets(skill)
     skill = Skill.find(skill) if skill.is_a?(Integer)
-    hit_player = skill.offensive
-    hit_player = !hit_player if !self.playable
-    if hit_player
-      targets = Character.all.select{|c|!c.playable}
-    else
-      targets = Character.all.select{|c|c.playable}
-    end
-    targets.collect{|target|[target.name,target.id]}
+    hit_player = !skill.offensive
+    hit_player = !hit_player if !self.player
+    targets = Character.where(:player => hit_player, 
+                              :level_id => level.id, 
+                              :game_id => game.id)
+    targets.select{|target|grid.simple_distance_from(self, target) <= skill.range}
+  end
+
+  def target_options(skill)
+    skill_targets(skill).collect{|target|[target.name, target.id]}
   end
 
   def use_skill(skill,target_character)
@@ -130,6 +147,13 @@ class Character < ActiveRecord::Base
   def alive?
     health > 0
   end  
+
+  def automatic_turn
+    # skills which could be used now
+    skills = skills.select{|skill|self.skill_targets(skill).any?}
+    # move targets, if not skills can be used
+    targets = level.characters.where(:player => !self.player).select{|x|self.can_see?(x)}
+  end
 
   # dynamic trait methods
   Character::TRAITS.each do |trait|

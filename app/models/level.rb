@@ -20,15 +20,26 @@ class Level < ActiveRecord::Base
       find_by_row_and_column(row, column)
     end
   end 
+
   has_many :exits, :class_name => 'Door', :foreign_key => :level_id
   has_many :entrances, :class_name => 'Door', :foreign_key => :destination_level_id
 
+  attr_accessor :grid
+
+  after_initialize :init_grid
+ 
+  def init_grid
+    self.grid = Grid.new(:rows => rows, 
+                         :columns => columns,
+                         :obstacles => obstacle_positions)
+  end
+
   def players
-    characters.all(:conditions => ['player = ?',true])
+    characters.where(:player => true)
   end
 
   def enemies
-    characters.all(:conditions => ['player = ?',false])
+    characters.where(:player => false)
   end
 
 end

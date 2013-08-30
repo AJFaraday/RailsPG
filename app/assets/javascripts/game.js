@@ -2,6 +2,6 @@
 // All this logic will automatically be available in application.js.
 
 function show_level(id) {
-  $('level_holder').hide();
-  $('level_holder#'+id).show();
+  $('.level_holder').hide();
+  $('.level_holder#'+id).show();
 }

@@ -19,7 +19,7 @@ class BattleTest < ActiveSupport::TestCase
     assert_equal 1, options.count
     # target options
     skill_options = options
-    targets = character.skill_targets(skill_options[0][1])       
+    targets = character.skill_target_options(skill_options[0][1])       
     puts targets.inspect
     assert_equal 1, targets.count
     # use a skill
@@ -35,7 +35,7 @@ class BattleTest < ActiveSupport::TestCase
     assert_equal 2, options.count
     # target options
     skill_options = options
-    targets = enemy.skill_targets(skill_options[0][1]) 
+    targets = enemy.skill_target_options(skill_options[0][1]) 
     puts targets.inspect
     assert_equal 1, targets.count
     # use a skill

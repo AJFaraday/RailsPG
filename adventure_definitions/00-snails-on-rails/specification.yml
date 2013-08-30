@@ -22,7 +22,7 @@ playspaces:
         level: 1
         skills:
           -
-            name: character attack
+            name: fighter attack
             level: 1
     doors:
       -

@@ -1,5 +1,7 @@
 "name=","target_trait=","magnitude=","magnitude_mod=","related_trait=","defendable=","evadeable=","set_skill"
-"Damage","health",-1,1.5,"attack",1,1,"character attack"
+"Damage","health",-1,1.5,"attack",1,1,"fighter attack"
+"Damage","health",-1,1.5,"attack",1,1,"ranger attack"
+"Damage","health",-1,1.5,"attack",1,1,"wizard attack"
 "Heal","health",1,1.2,"luck",,,"heal"
 "Damage","health",-1,1.1,"attack",1,1,"snail attack"
 "Damage","health",-1.5,1.1,"attack",1,1,"snail spit"

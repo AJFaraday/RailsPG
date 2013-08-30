@@ -4,7 +4,7 @@ class GamesController < ApplicationController
 
   # redirects to current game in play
   def index
-
+    redirect_to play_game_path(@current_game)
   end
 
   def new
@@ -32,6 +32,11 @@ class GamesController < ApplicationController
 
   def turn
     # skill 
+    case params[:skill]
+      when "skip"
+        @game.finish_turn
+      else
+    end
     # target
  
     # enemys in the same game and level move

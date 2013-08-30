@@ -1,5 +1,7 @@
 class Grid
 
+  require 'line_of_sight'
+
   attr_accessor :rows
   attr_accessor :columns
   attr_accessor :obstacles
@@ -9,6 +11,22 @@ class Grid
 
   def initialize(attrs={})
     attrs.each { |att, val| self.send("#{att}=", val) }
+  end
+
+  def line_of_sight_between(a,b)
+    if !a.is_a?(Array) and a.length != 2 and a.any?{|x|!x.is_a?(Integer)} 
+      raise "a: #{a.inspect} is not a valid coordinate"
+    end
+    if !b.is_a?(Array) and b.length != 2 and b.any?{|x|!x.is_a?(Integer)} 
+      raise "b: #{b.inspect} is not a valid coordinate"
+    end
+    if a[0] < 1 or a[0] > columns or a[1] < 1 or a[1] > rows
+      raise "a: #{a.inspect} is out of range (columns: #{columns}, rows: #{rows})"
+    end
+    if b[0] < 1 or b[0] > columns or b[1] < 1 or b[1] > rows
+      raise "b: #{b.inspect} is out of range (columns: #{columns}, rows: #{rows})"
+    end
+    LineOfSight.between(a,b,obstacles)
   end
 
   def out_of_range?(coord)
@@ -55,6 +73,8 @@ class Grid
   end
 
   def simple_distance_from(a, b)
+    a = [a.column, a.row] if !a.is_a?(Array) and a.respond_to?(:column) and a.respond_to?(:row)
+    b = [b.column, b.row] if !b.is_a?(Array) and b.respond_to?(:column) and b.respond_to?(:row)
     @x_dist = (a[1] - b[1]).abs #just distance
     @y_dist = (a[0] - b[0]).abs
     @x_dist + @y_dist

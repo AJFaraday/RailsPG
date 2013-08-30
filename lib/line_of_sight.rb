@@ -18,10 +18,21 @@ module LineOfSight
 
       current_block = [x.to_i,y.to_i]
       puts current_block.inspect
-      return false if obstacles.include?(current_block)
-      return false if x == x.to_i and obstacles.include?([(x.to_i - 1),y.to_i])
-      return false if y == y.to_i and obstacles.include?([x.to_i,(y.to_i - 1)])
-      return false if x == x.to_i and y == y.to_i and obstacles.include?([(x.to_i - 1),(y.to_i - 1)])
+      if obstacles.include?(current_block)
+        puts "a: obstacle at #{current_block.inspect}"
+        return false
+      end
+      if x == x.to_i and obstacles.include?([(x.to_i - 1),y.to_i])
+        puts "b: obstacle at #{[(x.to_i - 1),y.to_i].inspect}"
+        return false
+      end
+      if y == y.to_i and obstacles.include?([x.to_i,(y.to_i - 1)])
+        puts "c: obstacle at #{[x.to_i,(y.to_i - 1)].inspect}"
+        return false
+      end
+      if x == x.to_i and y == y.to_i and obstacles.include?([(x.to_i - 1),(y.to_i - 1)])
+        puts "d: obstacle at #{[(x.to_i - 1),(y.to_i - 1)].inspect}"
+      end
     end
     true
   end
