@@ -66,7 +66,8 @@ class Game < ActiveRecord::Base
       messages << enemy.automatic_turn
     end
     update_attributes(:current_character_id => (player_order[(player_order.index(current_character_id) + 1)] || player_order[0]))
-    messages.reverse
+    messages << "It's #{current_character.name}'s turn."
+    messages
   end
   
 
