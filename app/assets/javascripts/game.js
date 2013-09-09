@@ -7,6 +7,7 @@ function show_level(id) {
 }
 
 function init_level_grid(id) {
+  $('td.movable').off();
   // TODO set valid cells to 'movable' class
   $('td.movable').on('click',function()
     {
@@ -23,3 +24,23 @@ function init_level_grid(id) {
     }
   );
 };
+
+function reset_movable(level,column,row,distance) {
+  show_level(level);
+  $("td.movable").removeClass('movable')
+  if (arguments.length == 4){
+    //$("table.level_grid#lvl_"+level)[0].rows[row].cells[column]
+    $("table.level_grid#lvl_"+level+" tr").each(function(row_index){
+      $(this).children('td').each(function(column_index){
+        var x_dist = Math.abs(row - row_index);
+        var y_dist = Math.abs(column - column_index);
+        var dist = x_dist + y_dist
+        if(dist <= distance && Math.abs(dist) > 0) {
+          $(this).addClass('movable');
+        }
+      });
+    });
+  }
+  init_level_grid(level);
+};
+

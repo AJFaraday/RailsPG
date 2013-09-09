@@ -94,6 +94,12 @@ class Character < ActiveRecord::Base
   end 
 
   # General Methods
+ 
+  def current_turn_js_call
+    <<JS
+      reset_movable(#{level_id},#{column - 1},#{row - 1},#{movement_points});
+JS
+  end
 
   def move(target)
     path = current_level.path_from(self,target)

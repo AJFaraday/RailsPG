@@ -41,6 +41,11 @@ td.movable{
   background-color: black;
 }
 
+.character {
+  position:absolute !important;
+  margin-top: -72px;
+}
+
 .wizard {
   background-image:url('wizard.png');
 }

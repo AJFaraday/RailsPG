@@ -6,7 +6,7 @@ class Level < ActiveRecord::Base
   has_many :characters, :dependent => :destroy do
      
     def at(game_id, row, column)
-      find_by_game_id_and_row_and_column(game_id,row,column)   
+      find_all_by_game_id_and_row_and_column(game_id,row,column)   
     end
 
     def adventure

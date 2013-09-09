@@ -12,7 +12,6 @@
 </div>
 
 <script type='text/javascript'>
-  show_level(<%= @game.current_character.level_id %>);
-  init_level_grid(<%=@game.id%>);
+  <%= @game.current_character.current_turn_js_call %>
   $('#play_messages').height($('.level_holder').height()-$('.turn_menu').height());
 </script>

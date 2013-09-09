@@ -1,6 +1,7 @@
+<% characters = [] %>
 <div class='level_holder' id='<%= level.id %>' style='display:none;' >
   <h3><%= level.name %></h3>
-  <table class='level_grid'>
+  <table class='level_grid' id='lvl_<%= level.id%>'>
     <% level.rows.times do |row|%>
       <tr>
         <% row += 1 %>
@@ -11,17 +12,19 @@
           <% id = "" %>
           <% obstacle = level.obstacle_positions.include?(coord)%>
           <% klasses << "obstacle " if obstacle %>
-          <% if character = level.characters.at(@current_game.id, row, column) %> 
-            <% klasses << "#{character.character_class.name.downcase} " %>
-            <% id << "character_#{character.id}" %>
-          <% end %>
+          <% characters = level.characters.at(@current_game.id, row, column) %> 
           <% if door = level.doors.at(row, column) %>
             <% klasses << 'door' %>
             <% id << "door_#{door.id}" %>
           <% end %>
-          <!-- TODO remove 'movable' class when not applicable-->
-	  <td <%= "class=movable" unless obstacle %>>
+	  <td>
             <div id='<%= id %>' class='<%= klasses %>'></div>
+            <% if characters %>
+              <% characters.each do |character| %>
+                <div class='character <%="#{character.character_class.name.downcase}"%>' id='character_<%= character.id%>'></div>
+              <% end %>
+              <% characters = [] %>
+            <% end %>
           </td>
         <% end %>
       </tr>
