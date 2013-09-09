@@ -26,12 +26,14 @@ class Level < ActiveRecord::Base
 
   attr_accessor :grid
 
-  after_initialize :init_grid
- 
+  delegate :line_of_sight_between, :out_of_range?, :in_range?, :distance_from, :path_from, :to => :grid
+
+  after_initialize :init_grid 
+
   def init_grid
-    self.grid = Grid.new(:rows => rows, 
-                         :columns => columns,
-                         :obstacles => obstacle_positions)
+    self.grid ||= Grid.new(:rows => rows, 
+                           :columns => columns,
+                           :obstacles => obstacle_positions)
   end
 
   def players

@@ -22,6 +22,8 @@ class CreateCharacters < ActiveRecord::Migration
         t.integer "max_#{bar}"
       end
 
+      t.integer :movement_points
+
       traits = ['attack','defence','melee','ranged','evade','luck','speed']
       traits.each do |trait|
         t.integer trait, :null => false

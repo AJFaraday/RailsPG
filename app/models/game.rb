@@ -30,7 +30,7 @@ class Game < ActiveRecord::Base
   end
 
   def set_player_order
-    character_ids = self.characters.where(:player => true).order('speed desc').collect{|x|x.id}
+    character_ids = self.players.order('speed desc').collect{|x|x.id}
     self.update_attributes(
       :player_order => character_ids,
       :current_character_id => character_ids[0]
@@ -60,10 +60,13 @@ class Game < ActiveRecord::Base
   end
 
   def finish_turn
-    current_character.finish_turn
+    messages = []
+    messages << current_character.finish_turn
     current_character.current_level.enemies.where(:game_id => self.id).each do |enemy|
-      enemy.automatic_turn
+      messages << enemy.automatic_turn
     end
+    update_attributes(:current_character_id => (player_order[(player_order.index(current_character_id) + 1)] || player_order[0]))
+    messages.reverse
   end
   
 

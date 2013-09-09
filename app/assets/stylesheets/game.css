@@ -3,6 +3,12 @@
   They will automatically be included in application.css.
 */
 
+.play_messages{
+  background-color:#dddddd;
+  overflow:auto;
+  width:100%;
+}
+
 .level_holders{
   padding: 300px;
 }
@@ -24,6 +30,10 @@ table.level_grid > tbody > tr > td {
 table.level_grid > tbody > tr > td > div {
   height:70px;
   width: 70px;
+  border: 1px solid #444444;
+}
+
+td.movable{
   border: 1px solid #444444;
 }
 

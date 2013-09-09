@@ -53,6 +53,10 @@ class Grid
   attr_accessor :go_up
   attr_accessor :go_right
 
+  def path_from(a,b)
+    distance_from(a,b)
+    @visited    
+  end
 
   def distance_from(a, b)
     a = [a.column, a.row] if !a.is_a?(Array) and a.respond_to?(:column) and a.respond_to?(:row)
@@ -75,8 +79,30 @@ class Grid
   def simple_distance_from(a, b)
     a = [a.column, a.row] if !a.is_a?(Array) and a.respond_to?(:column) and a.respond_to?(:row)
     b = [b.column, b.row] if !b.is_a?(Array) and b.respond_to?(:column) and b.respond_to?(:row)
+    
+    # work out nominal route
+    x = a
+    @visited = [a]
+    until x[0] == b[0]
+      if b[0] > x[0]
+        x = [x[0]+1,x[1]]
+      else
+        x = [x[0]-1,x[1]]
+      end
+      @visited << x
+    end
+    until x[1] == b[1]
+      if b[1] > x[1]
+        x = [x[0],x[1]+1]
+      else
+        x = [x[0],x[1]-1]
+      end
+      @visited << x
+    end
+
     @x_dist = (a[1] - b[1]).abs #just distance
     @y_dist = (a[0] - b[0]).abs
+    
     @x_dist + @y_dist
   end
 

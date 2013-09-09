@@ -45,6 +45,7 @@ class Character < ActiveRecord::Base
       self.send("max_#{bar}=",calc_bar)
     end
     self.full_recover(true)
+    self.movement_points = self.speed
     # TODO get skills by explicit definition or player choice
     #self.get_skills
     self.set_init_exp
@@ -93,15 +94,32 @@ class Character < ActiveRecord::Base
   end 
 
   # General Methods
+
+  def move(target)
+    path = current_level.path_from(self,target)
+    # remove start point from path
+    path.shift
+    return nil if (path.size) > self.movement_points
+    self.coord = target
+    self.update_attributes(:movement_points => movement_points - (path.size))
+    path
+  end
+
   def finish_turn
-    "#{name}: End of turn"
-    effects.each{|e|e.turn}
+    effects.collect{|e|e.turn}
+    self.update_attributes(:movement_points => self.speed)
+    "#{self.name} finished their turn!"
   end
 
   # Battle Methods
 
   def coord
     [self.column, self.row]
+  end
+
+  def coord=(value)
+    self.column = value[0]
+    self.row = value[1]
   end
 
   def can_see?(target)
@@ -150,9 +168,12 @@ class Character < ActiveRecord::Base
 
   def automatic_turn
     # skills which could be used now
-    skills = skills.select{|skill|self.skill_targets(skill).any?}
+    #skills = skills.select{|skill|self.skill_targets(skill).any?}
     # move targets, if not skills can be used
-    targets = level.characters.where(:player => !self.player).select{|x|self.can_see?(x)}
+    #targets = level.characters.where(:player => !self.player).select{|x|self.can_see?(x)}
+    # TODO THIS!
+    
+    self.finish_turn
   end
 
   # dynamic trait methods

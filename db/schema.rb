@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20130827152622) do
     t.integer "max_health"
     t.integer "skill"
     t.integer "max_skill"
+    t.integer "movement_points"
     t.integer "attack",                                :null => false
     t.integer "defence",                               :null => false
     t.integer "melee",                                 :null => false

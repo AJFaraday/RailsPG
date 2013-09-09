@@ -25,21 +25,27 @@ class GamesController < ApplicationController
   end
 
   def move
+    @messages = []
     # (player character)_id
     # route (array of coordinates)
-    
+    raise "Co ordinate is not valid" unless params[:coord] and params[:coord][0..0] == '[' and params[:coord][-1..-1] == ']'
+    @coord = eval params[:coord]
+    @path = @game.current_character.move(@coord)
+    if @path
+      @messages << "#{@game.current_character.name} moves to #{@coord.inspect}"
+    else
+      @messages << "#{@game.current_character.name} can not move to #{@coord.inspect}."
+    end
   end
 
   def turn
     # skill 
     case params[:skill]
       when "skip"
-        @game.finish_turn
+        @messages = @game.finish_turn
       else
+        # TODO use a skill on a character
     end
-    # target
- 
-    # enemys in the same game and level move
   end
 
   def get_game

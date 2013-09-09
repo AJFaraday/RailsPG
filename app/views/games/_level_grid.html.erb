@@ -9,7 +9,8 @@
           <% coord = [column, row] %>
           <% klasses = "" %>         
           <% id = "" %>
-          <% klasses << "obstacle " if level.obstacle_positions.include?(coord) %>
+          <% obstacle = level.obstacle_positions.include?(coord)%>
+          <% klasses << "obstacle " if obstacle %>
           <% if character = level.characters.at(@current_game.id, row, column) %> 
             <% klasses << "#{character.character_class.name.downcase} " %>
             <% id << "character_#{character.id}" %>
@@ -18,7 +19,10 @@
             <% klasses << 'door' %>
             <% id << "door_#{door.id}" %>
           <% end %>
-	  <td><div id='<%= id %>' class='<%= klasses %>'></div></td>
+          <!-- TODO remove 'movable' class when not applicable-->
+	  <td <%= "class=movable" unless obstacle %>>
+            <div id='<%= id %>' class='<%= klasses %>'></div>
+          </td>
         <% end %>
       </tr>
     <% end %>
