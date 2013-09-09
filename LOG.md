@@ -146,3 +146,9 @@ It doesn`t currently display this movement on the spot, but that will need some 
 
 It`s just about starting to act like a game! The route finding work from Grid is being enacted.
 
+2013-09-09 - Afternoon
+----------------------
+
+Last day of my holiday, eating out soon, so this is a short log entry.
+
+I managed to move a character!!!! I`m so happy!
