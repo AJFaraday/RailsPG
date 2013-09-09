@@ -25,6 +25,17 @@ function init_level_grid(id) {
   );
 };
 
+function move(element_selector,coord){
+  var element = $(element_selector);
+  var table = element.closest('table');
+  var target_cell = table[0].rows[coord[1] - 1].cells[coord[0] - 1]
+  element.appendTo(target_cell)
+}
+
+function show_message(message){
+  $('#play_messages').prepend(message+"<br/>")
+}
+
 function reset_movable(level,column,row,distance) {
   show_level(level);
   $("td.movable").removeClass('movable')

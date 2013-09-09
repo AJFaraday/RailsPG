@@ -35,13 +35,13 @@ class GamesController < ApplicationController
       @messages << "#{@game.current_character.name} moves to #{@coord.inspect}"
     else
       @messages << "#{@game.current_character.name} can not move to #{@coord.inspect}."
-    end
+   end
   end
 
   def turn
     # skill 
     case params[:skill]
-      when "skip"
+      when "end"
         @messages = @game.finish_turn
       else
         # TODO use a skill on a character

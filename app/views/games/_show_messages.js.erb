@@ -1,6 +1,6 @@
 <% if @messages %>
   <% @messages.each do |message| %>
-    $('#play_messages').prepend("<%=message%><br/>");
+    show_message("<%=message%>");
   <% end %>
 <% end %>
 
