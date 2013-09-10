@@ -43,6 +43,8 @@ class GamesController < ApplicationController
     case params[:skill]
       when "end"
         @messages, @paths = @game.finish_turn
+      when "use_door"
+        @messages, @extra_js = @game.current_character.use_door
       else
         # TODO use a skill on a character
     end

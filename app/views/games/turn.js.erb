@@ -2,6 +2,9 @@
 
 $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
 <%#enemies movements take place %>
+
+<%= @extra_js if @extra_js %>
+
 <% times = [] %>
 <% if @paths and @paths.any? %>
   <% @paths.each do |movement| %>

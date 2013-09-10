@@ -99,9 +99,16 @@ class Character < ActiveRecord::Base
     self.current_level.exits.collect{|door| door.coord}.include?(self.coord)
   end
 
+
   def use_door
     if self.on_door?
-      return
+      door = self.current_level.exits.where(:row => self.row, :column => self.column)[0]
+      self.update_attributes!(:level_id => door.destination_level_id,
+                              :row => door.destination_row,
+                              :column => door.destination_column)
+      # tell javascript to show things accordingly
+      return "#{self.name} has moved to #{self.current_level.name}",
+          "$('#character_#{self.id}').appendTo($('table#lvl_#{level_id}')[0].rows[#{self.row-1}].cells[#{self.column-1}]);".html_safe
     else
       raise "Character can not use door when they are not on one."
     end
