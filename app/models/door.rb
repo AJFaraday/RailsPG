@@ -4,4 +4,8 @@ class Door < ActiveRecord::Base
   belongs_to :destination_level, :class_name => 'Level',
              :foreign_key => :destination_level_id
 
+  def coord
+    [self.column, self.row]
+  end
+
 end

@@ -1,5 +1,8 @@
 <%= render :partial => 'show_messages' %>
 <%= @game.current_character.current_turn_js_call%>
+
+$('#turn_menu').html('<%= raw render :partial => 'turn_menu' %>');
+<%#enemies movements take place %>
 <% if @paths and @paths.any? %>
   <% @paths.each do |movement| %>
     <% movement.each do |character, path|%>
@@ -17,5 +20,4 @@
       <% end %>
     <% end %>
   <% end %>
-
 <% end %>

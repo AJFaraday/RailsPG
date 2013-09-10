@@ -94,6 +94,18 @@ class Character < ActiveRecord::Base
   end 
 
   # General Methods
+
+  def on_door?
+    self.current_level.exits.collect{|door| door.coord}.include?(self.coord)
+  end
+
+  def use_door
+    if self.on_door?
+      return
+    else
+      raise "Character can not use door when they are not on one."
+    end
+  end
  
   def current_turn_js_call
     <<JS

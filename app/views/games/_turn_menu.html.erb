@@ -1,5 +1,8 @@
 <div class='turn_menu' style='height:100px;'>
   <ul class="nav nav-pills nav-stacked">
+    <% if @game.current_character.on_door? %>
+      <li><%= link_to "Go Through Door", turn_game_path(@game.id, :skill => 'use_door'), :remote => true %></li>
+    <% end %>
     <li><%= link_to "Skip Turn", turn_game_path(@game.id, :skill => 'end'), :remote => true %></li>
   </ul>
 </div>
