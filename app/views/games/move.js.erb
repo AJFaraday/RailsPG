@@ -1,5 +1,5 @@
 <%= render :partial => 'show_messages' %>
-<%= @game.current_character.current_turn_js_call%>
+$('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
 
 //TODO move stuff
 <% if @path %>
@@ -14,3 +14,4 @@
     );
   <% end %>
 <% end %>
+<%= @game.current_character.current_turn_js_call%>

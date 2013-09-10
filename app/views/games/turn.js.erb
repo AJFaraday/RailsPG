@@ -1,6 +1,6 @@
 <%= render :partial => 'show_messages' %>
 
-$('#turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
+$('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
 <%#enemies movements take place %>
 <% times = [] %>
 <% if @paths and @paths.any? %>
