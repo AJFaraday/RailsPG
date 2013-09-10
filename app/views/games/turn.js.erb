@@ -1,2 +1,19 @@
 <%= render :partial => 'show_messages' %>
 <%= @game.current_character.current_turn_js_call%>
+<% if @paths and @paths.any? %>
+  <% @paths.each do |movement| %>
+    <% movement.each do |character, path|%>
+      <% path.each_with_index do |coord,index| %>
+        setTimeout(
+          function(){
+            // debugging line
+            //show_message("<%= coord.inspect %>");
+            move("#<%= character %>",<%= coord.inspect %>);
+          },
+          <%=index * 150%>
+        );
+      <% end %>
+    <% end %>
+  <% end %>
+
+<% end %>

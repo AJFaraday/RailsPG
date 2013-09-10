@@ -29,7 +29,7 @@ class Character < ActiveRecord::Base
   attr_accessor :grid
 
   def grid
-    @grid ||= self.level.grid
+    @grid ||= self.current_level.grid
   end
 
   def initialize_character
@@ -172,14 +172,24 @@ JS
     health > 0
   end  
 
+  # used by enemies
   def automatic_turn
-    # skills which could be used now
-    #skills = skills.select{|skill|self.skill_targets(skill).any?}
-    # move targets, if not skills can be used
-    #targets = level.characters.where(:player => !self.player).select{|x|self.can_see?(x)}
-    # TODO THIS!
-    
-    self.finish_turn
+    messages = []
+    if self.game
+      #move towards player
+      movement_targets = game.players.select{|x|self.can_see?(x)}
+      if movement_targets.any?
+        path = current_level.path_from(self,movement_targets[0])
+        path.shift
+        path = path.first(self.movement_points)
+        messages << "Snail moves to #{path[-1].inspect}"
+        self.move(path[-1])
+      end
+      messages << self.finish_turn
+      return messages, {"character_#{self.id}" => path}
+    else
+      raise "enemies can not move when not in a game."
+    end
   end
 
   # dynamic trait methods

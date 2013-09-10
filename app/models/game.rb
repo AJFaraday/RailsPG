@@ -61,13 +61,16 @@ class Game < ActiveRecord::Base
 
   def finish_turn
     messages = []
+    paths = []
     messages << current_character.finish_turn
     current_character.current_level.enemies.where(:game_id => self.id).each do |enemy|
-      messages << enemy.automatic_turn
+      message,path = enemy.automatic_turn
+      messages << message
+      paths << path
     end
     update_attributes(:current_character_id => (player_order[(player_order.index(current_character_id) + 1)] || player_order[0]))
     messages << "It's #{current_character.name}'s turn."
-    messages
+    return messages.flatten, paths
   end
   
 
