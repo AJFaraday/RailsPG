@@ -152,3 +152,10 @@ It`s just about starting to act like a game! The route finding work from Grid is
 Last day of my holiday, eating out soon, so this is a short log entry.
 
 I managed to move a character!!!! I`m so happy!
+
+2013-09-10 - Train
+------------------
+
+Did some coding on the train, and movement has moved forwards. There`s now automatic movement for enemy turns, meaning your character is chased around the board by any enemies present. 
+
+I have a game where you get chased by snails!
