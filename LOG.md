@@ -115,13 +115,17 @@ Seems pretty robust
 2013-08-24 - evening and night
 ------------------------------
 
-I`ve done an INSANE amount of coding tonight, after a crazy week at work. I had a 3 hour train journey so I decided to really get to grips with one of the problems which was always going to eat my time, a lot! Route finding. 
+I`ve done an INSANE amount of coding tonight, after a crazy week at work. I had a 3 hour train journey so I decided to
+really get to grips with one of the problems which was always going to eat my time, a lot! Route finding.
 
-I previously tried a whole project of route finding, which became a project of space-exploring, ants in a maze (www.github.com/ajfaraday/ants-in-a-maze)
+I previously tried a whole project of route finding, which became a project of space-exploring,
+ants in a maze (www.github.com/ajfaraday/ants-in-a-maze)
 
-After spending a lot of time on the line of sight code, I had quite a logical head on, and a hot, crowded train to ignore, so I got my teeth stuck in, and continued when I got home. It`s now gone half past midnight. but I think I`ve cracked it. 
+After spending a lot of time on the line of sight code, I had quite a logical head on, and a hot, crowded train to ignore,
+so I got my teeth stuck in, and continued when I got home. It`s now gone half past midnight. but I think I`ve cracked it.
 
-My algorithm uses multiple strategies, compass_points towards the target, an aversion to repeat spaces and targeted back-tracking to work out the shortest path to the exit. It took me 5 hours, post work to get there. 
+My algorithm uses multiple strategies, compass_points towards the target, an aversion to repeat spaces and
+targeted back-tracking to work out the shortest path to the exit. It took me 5 hours, post work to get there.
 
 I`m mentally exhausted as I write this log, but genuinely proud of myself!
 
@@ -133,16 +137,23 @@ In a hurry, no time to write logs now!
 2013-08-30 - Morning
 --------------------
 
-My brother`s been around for the last week, on holiday, so I`ve had a little time to code but no time to write logs about it. Next, I`m going on holiday myself, so I won`t be coding much for the next week, if at all. 
+My brother`s been around for the last week, on holiday, so I`ve had a little time to code but no time to write logs
+about it. Next, I`m going on holiday myself, so I won`t be coding much for the next week, if at all.
 
-So, as a recap, I`ve started a simple web interface, still far from all there, but at least the level diagram (board) is in place and I`m starting to get action/turn logic. It`s still far from usable, but it`s starting to come together. Hopefully a week away walking will allow me to come back to it afresh when I get back to work.
+So, as a recap, I`ve started a simple web interface, still far from all there, but at least the level diagram (board)
+is in place and I`m starting to get action/turn logic. It`s still far from usable, but it`s starting to come together.
+Hopefully a week away walking will allow me to come back to it afresh when I get back to work.
 
 2013-09-05 - Evening
 --------------------
 
-So, I`m back in the real world, and back to work on RailsPG. There`s been a bit of idea-bashing today, and I`ve managed to make a small step forward, literally. It`s now possible to move a character one step (because his speed is 1). It`s even possible to finish your turn and then take another, so that`s a step forward.
+So, I`m back in the real world, and back to work on RailsPG. There`s been a bit of idea-bashing today, and I`ve managed
+to make a small step forward, literally. It`s now possible to move a character one step (because his speed is 1). It`s
+even possible to finish your turn and then take another, so that`s a step forward.
 
-It doesn`t currently display this movement on the spot, but that will need some re-structuring of the way level grids are rendered to actually show the path being taken (without that, I could just re-render the grid), but reloading the page shows the change. 
+It doesn`t currently display this movement on the spot, but that will need some re-structuring of the way level grids
+are rendered to actually show the path being taken (without that, I could just re-render the grid), but reloading the
+page shows the change.
 
 It`s just about starting to act like a game! The route finding work from Grid is being enacted.
 
@@ -156,6 +167,20 @@ I managed to move a character!!!! I`m so happy!
 2013-09-10 - Train
 ------------------
 
-Did some coding on the train, and movement has moved forwards. There`s now automatic movement for enemy turns, meaning your character is chased around the board by any enemies present. 
+Did some coding on the train, and movement has moved forwards. There`s now automatic movement for enemy turns, meaning
+your character is chased around the board by any enemies present.
 
 I have a game where you get chased by snails!
+
+2013-09-11 - Evening
+--------------------
+
+Back to evening sessions, since I'm playing with jQuery and passing things up and down from the server it's a lot more
+trial-and-error. Seeing how it turns out, rather than being nice and testable, or test-drivenable. But I'm making headway,
+the grid work was a good grounding and has needed little modification.
+
+The action menu now regenerates to be more context-sensitive and you can actually travel between levels via doors.
+
+It's all bits of work that sound basic, but which throw up complications at this stage.
+
+This would be so much easier with an actual game board and some counters.
