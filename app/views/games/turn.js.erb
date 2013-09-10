@@ -1,12 +1,13 @@
 <%= render :partial => 'show_messages' %>
-<%= @game.current_character.current_turn_js_call%>
 
-$('#turn_menu').html('<%= raw render :partial => 'turn_menu' %>');
+$('#turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
 <%#enemies movements take place %>
+<% times = [] %>
 <% if @paths and @paths.any? %>
   <% @paths.each do |movement| %>
     <% movement.each do |character, path|%>
       <% if path %>
+
         <% path.each_with_index do |coord,index| %>
           setTimeout(
             function(){
@@ -14,10 +15,14 @@ $('#turn_menu').html('<%= raw render :partial => 'turn_menu' %>');
               //show_message("<%= coord.inspect %>");
               move("#<%= character %>",<%= coord.inspect %>);
             },
-            <%=index * 150%>
+            <% time = index * 150 %>
+            <% times << time %>
+            <%=time%>
           );
         <% end %>
       <% end %>
     <% end %>
   <% end %>
 <% end %>
+
+setTimeout(function(){<%= @game.current_character.current_turn_js_call%>},<%= times.max || 0 %>);

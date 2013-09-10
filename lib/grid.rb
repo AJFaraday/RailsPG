@@ -61,6 +61,8 @@ class Grid
   def distance_from(a, b)
     a = [a.column, a.row] if !a.is_a?(Array) and a.respond_to?(:column) and a.respond_to?(:row)
     b = [b.column, b.row] if !b.is_a?(Array) and b.respond_to?(:column) and b.respond_to?(:row)
+    self.obstacles.delete(a)
+    self.obstacles.delete(b)
     raise "distance_from must accept arrays or models which respond to row and column" unless a.is_a?(Array) and b.is_a?(Array)
     if obstacles_between?(a, b)
       @options = []

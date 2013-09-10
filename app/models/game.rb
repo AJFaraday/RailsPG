@@ -4,7 +4,7 @@ class Game < ActiveRecord::Base
   
   has_many :levels, :through => :adventure
  
-  has_many :characters 
+  has_many :characters, :dependent => :destroy
 
   belongs_to :current_character, :class_name => 'Character', 
              :foreign_key => :current_character_id

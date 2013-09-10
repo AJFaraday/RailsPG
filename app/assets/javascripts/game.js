@@ -46,7 +46,10 @@ function reset_movable(level,column,row,distance) {
         var x_dist = Math.abs(row - row_index);
         var y_dist = Math.abs(column - column_index);
         var dist = x_dist + y_dist
-        if(dist <= distance && Math.abs(dist) > 0) {
+        if(dist <= distance &&
+            Math.abs(dist) > 0 &&
+            $(this).children('.character').length == 0 &&
+            $(this).children('.obstacle').length == 0) {
           $(this).addClass('movable');
         }
       });

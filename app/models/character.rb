@@ -114,6 +114,7 @@ JS
   end
 
   def move(target)
+    current_level.character_positions = self.game.characters.find_all_by_level_id(self.level_id).collect{|x|x.coord}
     path = current_level.path_from(self,target)
     # remove start point from path
     path.shift
@@ -121,6 +122,10 @@ JS
     self.coord = target
     self.update_attributes(:movement_points => movement_points - (path.size))
     path
+  rescue => er
+    logger.info er.message
+    logger.info er.backtrace[0..10]
+    nil
   end
 
   def finish_turn
@@ -191,6 +196,7 @@ JS
       #move towards player
       movement_targets = game.players.select{|x|self.can_see?(x)}
       if movement_targets.any?
+        current_level.character_positions = self.game.characters.find_all_by_level_id(self.level_id).collect{|x|x.coord}
         path = current_level.path_from(self,movement_targets[0])
         # don't include current space
         path.shift
