@@ -180,10 +180,15 @@ JS
       movement_targets = game.players.select{|x|self.can_see?(x)}
       if movement_targets.any?
         path = current_level.path_from(self,movement_targets[0])
+        # don't include current space
         path.shift
+        # don't actually sit on top of players
+        path.pop
         path = path.first(self.movement_points)
-        messages << "Snail moves to #{path[-1].inspect}"
-        self.move(path[-1])
+        if path.any?
+          messages << "Snail moves to #{path[-1].inspect}"
+          self.move(path[-1])
+        end
       end
       messages << self.finish_turn
       return messages, {"character_#{self.id}" => path}
