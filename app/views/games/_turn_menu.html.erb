@@ -1,8 +1,43 @@
+<% character ||= @game.current_character %>
 <div class='turn_menu' style='height:100px;'>
   <ul class="nav nav-pills nav-stacked">
-    <% if @game.current_character.on_door? %>
+    <% if character.on_door? %>
       <li><%= link_to "Go Through Door", turn_game_path(@game.id, :skill => 'use_door'), :remote => true %></li>
     <% end %>
+    <li class='dropdown'>
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Actions<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <% character.skills.each do |skill| %>
+          <% if skill.skill_cost <= character.skill %>
+            <% if character.skill_targets(skill).any? %>           
+              <li class='nav-header' 
+                  title='<%= skill.tooltip %>'>
+                <%= skill.menu_label %>
+              </li>
+              <% character.skill_targets(skill).each do |target| %>
+                <li>
+                  <%= link_to target.name, 
+                      turn_game_path(@game.id, 
+                                     :skill => skill.id, 
+                                     :target => target.id), 
+                      :remote => true %>
+                </li>
+              <% end %>
+            <% else %>
+              <li class='nav-header' 
+                  title='<%= skill.tooltip %>'>
+                <%= skill.menu_label %> (No Targets)
+              </li>
+            <% end %>
+          <% else %>
+              <li class='nav-header' 
+                  title='<%= skill.tooltip %>'>
+                <%= skill.menu_label %> (Not Enough Skill)
+              </li>          
+          <% end %>       
+        <% end %>
+      </ul>
+    </li>
     <li><%= link_to "Skip Turn", turn_game_path(@game.id, :skill => 'end'), :remote => true %></li>
   </ul>
 </div>

@@ -1,6 +1,6 @@
 <% if @messages %>
-  <% @messages.each do |message| %>
-    show_message("<%=message%>");
+  <% @messages.each_with_index do |message,index| %>
+    setTimeout(function(){show_message("<%=message%>");},<%= index * 150 %>);
   <% end %>
 <% end %>
 

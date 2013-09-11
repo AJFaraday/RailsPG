@@ -14,6 +14,17 @@ class Skill < ActiveRecord::Base
     puts "  Skill has these effects: #{skill_effects.collect{|x|x.name}.join(', ')}"
   end
 
+  def menu_label
+    "#{label} (#{skill_cost} skill)"
+  end
+
+  def tooltip
+    <<TEXT 
+      Cost: #{skill_cost}
+      Range: #{range}
+TEXT
+  end
+
   def add_to_classes(classes)
     # used in import
     classes = eval("[#{classes}]") if classes.is_a?(String)
@@ -26,16 +37,17 @@ class Skill < ActiveRecord::Base
   end
 
   def use(source_character,target_character)
+    source_character = Character.find(source_character) unless source_character.is_a?(Character)
+    target_character = Character.find(target_character) unless target_character.is_a?(Character)
     if source_character.skill < self.skill_cost
       message = "#{source_character.name} can't use #{label}, not enough skill."
       puts message
       message
     else
       source_character.update_attribute(:skill, (source_character.skill - self.skill_cost))
-      message = "#{source_character.name} uses #{label} on #{target_character.name}\n"
-      puts message
-      skill_effects.each{|effect|message << effect.use(source_character,target_character)}
-      message
+      messages = ["#{source_character.name} uses #{label} on #{target_character.name}"]
+      skill_effects.each{|effect|messages << effect.use(source_character,target_character)}
+      messages
     end
   end
 

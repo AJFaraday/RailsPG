@@ -4,17 +4,17 @@ class SpawnEffect < SkillEffect
 
 
   def use(source,target)
+    messages = []
     self.source_character = source
     self.target_character = target
     level = magnitude
     # TODO modify this by effect level with magnitude mod
-    message =  "  #{name} spawned. Level: #{level.to_i}\n"
+    messages << "#{name} spawned. Level: #{level.to_i}"
     Character.create!(:player => source_character.player,
                       :character_class_id => spawn_character_class.id,
                       :name => name,
                       :level => level)
-    puts message
-    message 
+    messages 
   end
 
   def set_spawn_class(name)

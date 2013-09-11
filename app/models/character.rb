@@ -123,6 +123,8 @@ JS
   def tooltip
     <<HTML
 #{self.name} (Level #{self.level})
+#{self.health}/#{self.max_health} health
+#{self.skill}/#{self.max_skill} skill
 HTML
   end
 
@@ -142,9 +144,10 @@ HTML
   end
 
   def finish_turn
-    effects.collect{|e|e.turn}
+    messages = effects.collect{|e|e.turn}
     self.update_attributes(:movement_points => self.speed)
-    "#{self.name} finished their turn!"
+    messages << "#{self.name} finished their turn!"
+    messages
   end
 
   # Battle Methods
@@ -164,9 +167,6 @@ HTML
      grid.line_of_sight_between(self.coord, target.coord))
   end
 
-  def skill_options
-    skills.collect{|skill| [skill.label,skill.id]}
-  end
 
   def skill_targets(skill)
     skill = Skill.find(skill) if skill.is_a?(Integer)
@@ -179,19 +179,14 @@ HTML
                             self.can_see?(target)}
   end
 
-  def target_options(skill)
-    skill_targets(skill).collect{|target|[target.name, target.id]}
-  end
 
   def use_skill(skill,target_character)
     if alive?
       skill = Skill.find(skill) if skill.is_a?(Integer)
       target_character = Character.find(target_character) if target_character.is_a?(Integer)
       skill.use(self,target_character)
-      true
     else
-      puts "#{name} can`t use skills while dead."
-      false
+      "#{name} can`t use skills while dead."
     end
   end
 

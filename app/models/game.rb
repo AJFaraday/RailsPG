@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
     paths = []
     messages << current_character.finish_turn
     current_character.current_level.enemies.where(:game_id => self.id).each do |enemy|
-      message,path = enemy.automatic_turn
+      message, path = enemy.automatic_turn
       messages << message
       paths << path
     end

@@ -1,16 +1,15 @@
 class BarEffect < SkillEffect
 
   def use(source,target)
+    messages = []
     self.source_character = source
     self.target_character = target
     if evadeable and roll_for_evade
-      message = "  #{name} evaded\n"
-      puts message
-      message
+      messages << "#{name} evaded"
+      messages
     elsif defendable and roll_for_defence
-      message = "  #{name} defended\n"
-      puts message
-      message
+      messages << "#{name} defended"
+      messages
     else
       amount = source_character.send(related_trait)
       amount *= magnitude
@@ -18,13 +17,12 @@ class BarEffect < SkillEffect
       if critical
         amount *= CRITICAL_MULTIPLIER
       end
-      message =  "  #{"Critical " if critical}#{name}: #{target_trait} #{"+"if amount >= 0}#{amount.to_i}\n"
+      messages << "#{"Critical " if critical}#{name}: #{target_trait} #{"+"if amount >= 0}#{amount.to_i}"
       # this gets the result, then adjusts it for max/min on bars
       target_amount = (target_character.send("#{target_trait}") + amount.to_i)
       target_amount = adjust_amount_for_limit(target_amount)
       target_character.update_attribute target_trait, target_amount
-      puts message
-      message
+      messages
     end
   end
 

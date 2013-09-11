@@ -44,7 +44,10 @@ class GamesController < ApplicationController
       when "use_door"
         @messages, @extra_js = @game.current_character.use_door
       else
-        # TODO use a skill on a character
+        @skill = @game.current_character.skills.find(params[:skill])
+        @messages = @game.current_character.use_skill(@skill,params[:target])
+        messages, @paths = @game.finish_turn
+        @messages = [@messages, messages].flatten
     end
   end
 

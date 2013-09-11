@@ -21,7 +21,7 @@ class Effect < ActiveRecord::Base
         self.save
       end
     else 
-      puts "Effect doesn't have a related skill effect."  
+      ["Effect doesn't have a related skill effect."]
     end 
   end
 
