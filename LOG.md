@@ -172,15 +172,25 @@ your character is chased around the board by any enemies present.
 
 I have a game where you get chased by snails!
 
-2013-09-11 - Evening
+2013-09-10 - Evening
 --------------------
 
-Back to evening sessions, since I'm playing with jQuery and passing things up and down from the server it's a lot more
-trial-and-error. Seeing how it turns out, rather than being nice and testable, or test-drivenable. But I'm making headway,
+Back to evening sessions, since I`m playing with jQuery and passing things up and down from the server it`s a lot more
+trial-and-error. Seeing how it turns out, rather than being nice and testable, or test-drivenable. But I`m making headway,
 the grid work was a good grounding and has needed little modification.
 
 The action menu now regenerates to be more context-sensitive and you can actually travel between levels via doors.
 
-It's all bits of work that sound basic, but which throw up complications at this stage.
+It`s all bits of work that sound basic, but which throw up complications at this stage.
 
 This would be so much easier with an actual game board and some counters.
+
+2013-09-11 - Evening
+--------------------
+
+There was lots of messing around today. But it`s reached the point where I can attack a snail. We`ll de-pest that
+garden one of these days. 
+
+The next step is to actually kill them off when they run out of health.
+
+The step after that is to let them fight back.
