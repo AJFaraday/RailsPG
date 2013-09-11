@@ -28,4 +28,9 @@ $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
   <% end %>
 <% end %>
 
+<% @game.current_level.characters.each do |character| %>
+  set_health(<%= character.id%>, <%= character.health_percent %>);
+  set_skill(<%= character.id%>, <%= character.skill_percent %>);
+<% end %>
+
 setTimeout(function(){<%= @game.current_character.current_turn_js_call%>},<%= times.max || 0 %>);

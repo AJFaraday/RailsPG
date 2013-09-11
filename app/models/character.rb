@@ -234,6 +234,13 @@ HTML
     end
   end
 
+  # dynamic bar methods
+  Character::BARS.each do |bar|
+    define_method "#{bar}_percent" do
+      ((self.send("#{bar}").to_f/self.send("max_#{bar}")*100.0).to_i)
+    end
+  end
+
   # dynamic trait methods
   Character::TRAITS.each do |trait|
     define_method "base_#{trait}"do

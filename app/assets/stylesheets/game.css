@@ -43,7 +43,25 @@ td.movable{
 
 .character {
   position:absolute !important;
-  margin-top: -72px;
+  margin-top: -72px !important;
+}
+
+.health_bar{
+  background-color:#55ff55;
+  position:absolute;
+  width:6px;
+  height:66px;
+  top:2px;
+  left:2px;
+}
+
+.skill_bar{
+  background-color:#5555ff;
+  position:absolute;
+  width:6px;
+  height:66px;
+  top:2px;
+  left:63px;
 }
 
 .wizard {

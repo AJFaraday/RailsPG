@@ -11,7 +11,7 @@ class Game < ActiveRecord::Base
 
   has_one :current_level, 
           :through => :current_character, 
-          :class_name => 'Level', :source => :level
+          :class_name => 'Level', :source => :current_level
   
   serialize :player_order
 
