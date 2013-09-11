@@ -26,8 +26,6 @@ class GamesController < ApplicationController
 
   def move
     @messages = []
-    # (player character)_id
-    # route (array of coordinates)
     raise "Co ordinate is not valid" unless params[:coord] and params[:coord][0..0] == '[' and params[:coord][-1..-1] == ']'
     @coord = eval params[:coord]
     @path = @game.current_character.move(@coord)
@@ -35,7 +33,7 @@ class GamesController < ApplicationController
       @messages << "#{@game.current_character.name} moves to #{@coord.inspect}"
     else
       @messages << "#{@game.current_character.name} can not move to #{@coord.inspect}."
-   end
+    end
   end
 
   def turn

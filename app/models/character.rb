@@ -120,6 +120,12 @@ class Character < ActiveRecord::Base
 JS
   end
 
+  def tooltip
+    <<HTML
+#{self.name} (Level #{self.level})
+HTML
+  end
+
   def move(target)
     current_level.character_positions = self.game.characters.find_all_by_level_id(self.level_id).collect{|x|x.coord}
     path = current_level.path_from(self,target)

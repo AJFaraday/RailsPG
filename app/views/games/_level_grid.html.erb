@@ -21,7 +21,7 @@
             <div id='<%= id %>' class='<%= klasses %>'></div>
             <% if characters %>
               <% characters.each do |character| %>
-                <div class='character <%="#{character.character_class.name.downcase}"%>' id='character_<%= character.id%>'></div>
+                <%= render :partial => 'character_token', :locals => {:character => character} %>
               <% end %>
               <% characters = [] %>
             <% end %>
