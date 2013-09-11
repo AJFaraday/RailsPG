@@ -167,9 +167,10 @@ JS
     hit_player = !skill.offensive
     hit_player = !hit_player if !self.player
     targets = Character.where(:player => hit_player, 
-                              :level_id => level.id, 
+                              :level_id => level_id, 
                               :game_id => game.id)
-    targets.select{|target|grid.simple_distance_from(self, target) <= skill.range}
+    targets.select{|target|(grid.simple_distance_from(self, target) <= skill.range) and 
+                            self.can_see?(target)}
   end
 
   def target_options(skill)
@@ -200,20 +201,25 @@ JS
   def automatic_turn
     messages = []
     if self.game
-      #move towards player
-      movement_targets = game.players.select{|x|self.can_see?(x)}
-      if movement_targets.any?
-        current_level.character_positions = self.game.characters.find_all_by_level_id(self.level_id).collect{|x|x.coord}
-        path = current_level.path_from(self,movement_targets[0])
-        # don't include current space
-        path.shift
-        # don't actually sit on top of players
-        path.pop
-        path = path.first(self.movement_points)
-        if path.any?
-          messages << "Snail moves to #{path[-1].inspect}"
-          self.move(path[-1])
+        #move towards player
+        movement_targets = game.players.select{|x|self.can_see?(x)}
+        begin
+        if movement_targets.any?
+          current_level.character_positions = self.game.characters.find_all_by_level_id(self.level_id).collect{|x|x.coord}
+          path = current_level.path_from(self,movement_targets[0])
+          # don't include current space
+          path.shift
+          # don't actually sit on top of players
+          path.pop
+          path = path.first(self.movement_points)
+          if path.any?
+            messages << "Snail moves to #{path[-1].inspect}"
+            self.move(path[-1])
+          end
         end
+      rescue => er
+        logger.info "Caught error: #{er.message}"
+        logger.info er.backtrace[0..10]
       end
       messages << self.finish_turn
       return messages, {"character_#{self.id}" => path}

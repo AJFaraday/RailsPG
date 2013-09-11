@@ -28,10 +28,10 @@ playspaces:
       -
         destination: garden_2
         destination_column: 1
-        destination_row: 5
+        destination_row: 7
   garden_2:
     name: Shady Garden
-    rows: 5
+    rows: 7
     columns: 5
     filename: garden2.csv
     enemies:
