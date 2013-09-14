@@ -5,6 +5,7 @@ class CreateCharacters < ActiveRecord::Migration
       t.string :name, :null => false
       t.integer :character_class_id, :null => false
       t.boolean :player, :default => false
+      t.integer :last_hit_by_character_id
 
       t.integer :game_id # specific game in play
       t.integer :adventure_id # adventure, a template character

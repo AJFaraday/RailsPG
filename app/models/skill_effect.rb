@@ -45,6 +45,4 @@ class SkillEffect < ActiveRecord::Base
     puts "Using SkillEffect use method, which does nothing. Should come from a sub-class"
   end
 
-
-
 end

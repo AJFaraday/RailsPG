@@ -21,7 +21,8 @@ class BarEffect < SkillEffect
       # this gets the result, then adjusts it for max/min on bars
       target_amount = (target_character.send("#{target_trait}") + amount.to_i)
       target_amount = adjust_amount_for_limit(target_amount)
-      target_character.update_attribute target_trait, target_amount
+      target_character.update_attributes(target_trait => target_amount,
+                                         :last_hit_by_character_id=> source.id)
       messages
     end
   end

@@ -5,6 +5,7 @@ class CreateEffects < ActiveRecord::Migration
       t.integer :repeat_effect_id
       t.integer :amount
       t.integer :character_id
+      t.integer :source_character_id
       t.integer :turns_remaining
     end
   end

@@ -20,6 +20,7 @@ class RepeatEffect < SkillEffect
       messages << "  #{"Critical " if critical}#{name}: #{target_trait} #{"+"if amount >= 0}#{amount.to_i}\n"
       Effect.create!(:character_id => target_character.id,
                      :amount => amount,
+                     :source_character_id => source.id,
                      :turns_remaining => length, #TODO modify this by skill level
                      :repeat_effect_id => self.id)
       messages

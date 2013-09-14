@@ -4,6 +4,10 @@ class Effect < ActiveRecord::Base
   belongs_to :repeat_effect
 
   belongs_to :character
+  belongs_to :source_character,
+             :foreign_key => :source_character_id,
+             :class_name => 'Character'
+
 
   validate :has_skill_effect
 
@@ -20,9 +24,9 @@ class Effect < ActiveRecord::Base
       else
         self.save
       end
-    else 
+    else
       ["Effect doesn't have a related skill effect."]
-    end 
+    end
   end
 
   def turn_effect
@@ -34,7 +38,8 @@ class Effect < ActiveRecord::Base
       turn_amount = self.amount
       critical = repeat_effect.roll_for_critical
       turn_amount *= SkillEffect::CRITICAL_MULTIPLIER if critical
-      character.update_attribute(target_trait, (character.send(target_trait) + turn_amount)) 
+      character.update_attributes(target_trait =>(character.send(target_trait) + turn_amount),
+                                  :last_hit_by_character_id => source_character_id)
       @message = "  #{"Critical " if critical}#{repeat_effect.name}: #{target_trait} #{"+" if turn_amount > 0}#{turn_amount.to_i}\n"
     end
     puts @message
@@ -56,6 +61,6 @@ class Effect < ActiveRecord::Base
     else
       nil
     end
-  end  
+  end
 
 end

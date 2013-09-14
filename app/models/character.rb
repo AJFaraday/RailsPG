@@ -5,6 +5,7 @@ class Character < ActiveRecord::Base
   belongs_to :adventure
   belongs_to :game
   belongs_to :current_level, :class_name => 'Level', :foreign_key => 'level_id'
+  belongs_to :last_hit_by_character, :class_name => 'Character', :foreign_key => 'last_hit_by_character_id'
 
   validates_presence_of :name
   validates_presence_of :character_class
@@ -64,12 +65,13 @@ class Character < ActiveRecord::Base
 
   # Level Methods
 
-  before_update :check_for_level
+  #before_update :check_for_level
 
   def check_for_level
     until self.exp <= self.level_up_target and self.level <= LEVEL_CAP
-      self.level_up(false)
+      message = self.level_up(false)
       self.level_up_target *= LEVEL_UP_TARGET_MULTIPLIER
+      message
     end
   end
 
@@ -83,7 +85,8 @@ class Character < ActiveRecord::Base
     BARS.each do |bar|
       self.send("max_#{bar}=", (self.send("max_#{bar}") + character_class.send("#{bar}_mod")))
     end
-    self.full_recover(true)
+    self.full_recover()
+    return "#{self.name} is now at level #{self.level}"
   end
 
   def get_skills
@@ -108,7 +111,7 @@ class Character < ActiveRecord::Base
                               :column => door.destination_column)
       # tell javascript to show things accordingly
       return "#{self.name} has moved to #{self.current_level.name}",
-          "$('#character_#{self.id}').appendTo($('table#lvl_#{level_id}')[0].rows[#{self.row-1}].cells[#{self.column-1}]);".html_safe
+        "$('#character_#{self.id}').appendTo($('table#lvl_#{level_id}')[0].rows[#{self.row-1}].cells[#{self.column-1}]);".html_safe
     else
       raise "Character can not use door when they are not on one."
     end
@@ -183,7 +186,7 @@ HTML
   def can_see?(target)
     target = Character.find(target) if target.is_a?(Integer)
     (self.level_id == target.level_id and self.game_id == target.game_id and
-        grid.line_of_sight_between(self.coord, target.coord))
+      grid.line_of_sight_between(self.coord, target.coord))
   end
 
 
@@ -195,7 +198,7 @@ HTML
                               :level_id => level_id,
                               :game_id => game.id)
     targets.select { |target| (grid.simple_distance_from(self, target) <= skill.range) and
-        self.can_see?(target) }
+      self.can_see?(target) }
   end
 
 
@@ -211,6 +214,22 @@ HTML
 
   def dead?
     health <= 0
+  end
+
+  def kill
+    if dead?
+      if last_hit_by_character
+        experience = Character::TRAITS.collect { |t| self.send(t) }.sum
+        messages = ["#{last_hit_by_character.name} killed #{self.name} and gained #{experience} experience."]
+        self.destroy
+        last_hit_by_character.update_attribute(:exp, last_hit_by_character.exp + experience)
+        messages << last_hit_by_character.check_for_level
+        # todo
+        messages
+      else
+        messages = ["#{self.name} has died."]
+      end
+    end
   end
 
   def alive?

@@ -56,29 +56,30 @@ ActiveRecord::Schema.define(:version => 20130827152622) do
   end
 
   create_table "characters", :force => true do |t|
-    t.string  "name",                                  :null => false
-    t.integer "character_class_id",                    :null => false
-    t.boolean "player",             :default => false
+    t.string  "name",                                        :null => false
+    t.integer "character_class_id",                          :null => false
+    t.boolean "player",                   :default => false
+    t.integer "last_hit_by_character_id"
     t.integer "game_id"
     t.integer "adventure_id"
     t.integer "level_id"
     t.integer "row"
     t.integer "column"
-    t.integer "exp",                :default => 0
-    t.integer "level",              :default => 1
-    t.integer "level_up_target",    :default => 10
+    t.integer "exp",                      :default => 0
+    t.integer "level",                    :default => 1
+    t.integer "level_up_target",          :default => 10
     t.integer "health"
     t.integer "max_health"
     t.integer "skill"
     t.integer "max_skill"
     t.integer "movement_points"
-    t.integer "attack",                                :null => false
-    t.integer "defence",                               :null => false
-    t.integer "melee",                                 :null => false
-    t.integer "ranged",                                :null => false
-    t.integer "evade",                                 :null => false
-    t.integer "luck",                                  :null => false
-    t.integer "speed",                                 :null => false
+    t.integer "attack",                                      :null => false
+    t.integer "defence",                                     :null => false
+    t.integer "melee",                                       :null => false
+    t.integer "ranged",                                      :null => false
+    t.integer "evade",                                       :null => false
+    t.integer "luck",                                        :null => false
+    t.integer "speed",                                       :null => false
   end
 
   create_table "doors", :force => true do |t|
@@ -95,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20130827152622) do
     t.integer "repeat_effect_id"
     t.integer "amount"
     t.integer "character_id"
+    t.integer "source_character_id"
     t.integer "turns_remaining"
   end
 

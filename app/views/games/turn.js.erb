@@ -1,10 +1,11 @@
 <%= render :partial => 'show_messages' %>
 
+<!-- refresh actions -->
 $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
 
 <%= @extra_js if @extra_js %>
 
-<%#enemies movements take place %>
+<!-- enemies movements take place -->
 <% times = [] %>
 <% if @paths and @paths.any? %>
   <% @paths.each do |movement| %>
@@ -28,9 +29,21 @@ $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
   <% end %>
 <% end %>
 
+<!-- set health bars -->
 <% @game.current_level.characters.each do |character| %>
   set_health(<%= character.id%>, <%= character.health_percent %>);
   set_skill(<%= character.id%>, <%= character.skill_percent %>);
 <% end %>
+
+<!-- remove dead characters from the board -->
+<% if @game.character_ids_to_remove %>
+  <% @game.character_ids_to_remove.each do |id| %>
+    set_health(<%= id %>, 0);
+    setTimeout(function(){$('#character_<%= id %>').slideUp();},1000);
+    setTimeout(function(){$('#character_<%= id %>').remove();},1500);
+    <% times << 1500 %>
+  <% end %>
+<% end %>
+
 
 setTimeout(function(){<%= @game.current_character.current_turn_js_call%>},<%= times.max || 0 %>);
