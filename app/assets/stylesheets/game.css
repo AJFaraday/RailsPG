@@ -76,8 +76,40 @@ td.movable{
   background-image:url('fighter.png');
 }
 
+.fighter-up {
+  background-image:url('fighter-up.png');
+}
+
+.fighter-down {
+  background-image:url('fighter-down.png');
+}
+
+.fighter-left {
+  background-image:url('fighter-left.png');
+}
+
+.fighter-right {
+  background-image:url('fighter-right.png');
+}
+
 .snail {
   background-image:url('snail.png');
+}
+
+.snail-up {
+  background-image:url('snail-up.png');
+}
+
+.snail-down {
+  background-image:url('snail-down.png');
+}
+
+.snail-left {
+  background-image:url('snail-left.png');
+}
+
+.snail-right {
+  background-image:url('snail-right.png');
 }
 
 .cabbage {
