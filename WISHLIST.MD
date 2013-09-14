@@ -6,9 +6,9 @@ This is basically a list of what's coming up in RailsPG development, mostly a br
 short term
 ----------
 
-* Skill menu should replenish before end of turn (currently, no options)
-* enemies attacking back
 * skill points should replenish
+* Win and Fail situations for games
+
 
 long term
 ---------
