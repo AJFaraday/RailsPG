@@ -16,7 +16,7 @@ $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
             function(){
               // debugging line
               //show_message("<%= coord.inspect %>");
-              move("#<%= character %>",<%= coord.inspect %>);
+              move("#<%= character %>",<%= raw coord.inspect %>);
             },
             <% time = index * 150 %>
             <% times << time %>

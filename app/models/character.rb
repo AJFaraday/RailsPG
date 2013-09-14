@@ -234,7 +234,8 @@ HTML
           path = path.first(self.movement_points)
           if path.any?
             messages << "Snail moves to #{path[-1].inspect}"
-            self.move(path[-1])
+            path = self.move(path[-1])
+            path = add_directions(path)
           end
         end
       rescue => er
@@ -277,5 +278,10 @@ HTML
       end
       n
     end
+  end
+
+
+  def to_s
+    "#{self.name} - #{self.game.adventure.name} #{self.current_level.name} #{self.coord.inspect}"
   end
 end
