@@ -122,9 +122,7 @@ JS
 
   def tooltip
     <<HTML
-#{self.name} (Level #{self.level})
-#{self.health}/#{self.max_health} health
-#{self.skill}/#{self.max_skill} skill
+#{self.name} (Level #{self.level}) - #{self.health}/#{self.max_health} health - #{self.skill}/#{self.max_skill} skill
 HTML
   end
 

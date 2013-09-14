@@ -8,7 +8,7 @@ $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
       function(){
         // debugging line
         //show_message("<%= coord.inspect %>");
-        move("#character_"+<%= @game.current_character_id %>,<%= coord.inspect %>);
+        move("#character_"+<%= @game.current_character_id %>,<%= raw coord.inspect %>);
       }, 
       <%=index * 150%>
     );
