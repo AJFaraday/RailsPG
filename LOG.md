@@ -194,3 +194,17 @@ garden one of these days.
 The next step is to actually kill them off when they run out of health.
 
 The step after that is to let them fight back.
+
+2013-09-14 - Morning and Evening
+--------------------------------
+
+Today was a lot of general things which needed taking care of. Killing a character now actually removes it from the board,
+doles out experience and experience can produce a level up. 
+
+Enemies now use skills when some are optional, as well. 
+
+There`s some issues when you reach the second level and two snails take action at once, the game`s reached the level of 
+complexity where I can reproduce this problem multiple times, but I`m not sure what element of the game has gone wrong,
+except that the returning javascript has an error, and isn`t taking action. But it`s getting there.
+
+It`s always getting there.
