@@ -26,6 +26,8 @@ class Grid
     if b[0] < 1 or b[0] > columns or b[1] < 1 or b[1] > rows
       raise "b: #{b.inspect} is out of range (columns: #{columns}, rows: #{rows})"
     end
+    self.obstacles.delete(a)
+    self.obstacles.delete(b)
     LineOfSight.between(a,b,obstacles)
   end
 

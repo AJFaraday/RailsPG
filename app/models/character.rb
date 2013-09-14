@@ -197,8 +197,7 @@ HTML
     targets = Character.where(:player => hit_player,
                               :level_id => level_id,
                               :game_id => game.id)
-    targets.select { |target| (grid.simple_distance_from(self, target) <= skill.range) and
-      self.can_see?(target) }
+    targets.select { |target| (grid.simple_distance_from(self, target) <= skill.range) and self.can_see?(target) }
   end
 
 

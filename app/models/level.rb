@@ -34,7 +34,7 @@ class Level < ActiveRecord::Base
   attr_accessor :character_positions
 
   def init_grid
-    self.grid ||= Grid.new(:rows => rows,
+    self.grid = Grid.new(:rows => rows,
                            :columns => columns,
                            :obstacles => obstacle_positions)
   end

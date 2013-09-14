@@ -14,6 +14,10 @@ class Skill < ActiveRecord::Base
     puts "  Skill has these effects: #{skill_effects.collect{|x|x.name}.join(', ')}"
   end
 
+  def to_s
+    "Skill #{self.id}: #{self.label}(#{self.name})"
+  end
+
   def menu_label
     "#{label} (#{skill_cost} skill)"
   end
