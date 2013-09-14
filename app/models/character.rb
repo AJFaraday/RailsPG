@@ -238,27 +238,42 @@ HTML
   # used by enemies
   def automatic_turn
     messages = []
+    move = true
     if self.game
-      #move towards player
-      movement_targets = game.players.select { |x| self.can_see?(x) }
-      begin
-        if movement_targets.any?
-          current_level.character_positions = self.game.characters.find_all_by_level_id(self.level_id).collect { |x| x.coord }
-          path = current_level.path_from(self, movement_targets[0])
-          # don't include current space
-          path.shift
-          # don't actually sit on top of players
-          path.pop
-          path = path.first(self.movement_points)
-          if path.any?
-            messages << "Snail moves to #{path[-1].inspect}"
-            path = self.move(path[-1])
-            path = add_directions(path)
-          end
+      # attack if applicable
+      skls = self.skills.where("skill_cost <= #{self.skill}").shuffle
+      skls.each do |skl|
+        targets = skill_targets(skl)
+        if targets.any?
+          target = targets.shuffle.first
+          messages << use_skill(skl, target)
+          move = false
         end
-      rescue => er
-        logger.info "Caught error: #{er.message}"
-        logger.info er.backtrace[0..10]
+      end
+      # move towards player
+      if move
+        movement_targets = game.players.select { |x| self.can_see?(x) }
+        begin
+          if movement_targets.any?
+            current_level.character_positions = self.game.characters.find_all_by_level_id(self.level_id).collect { |x| x.coord }
+            path = current_level.path_from(self, movement_targets[0])
+            # don't include current space
+            path.shift
+            # don't actually sit on top of players
+            path.pop
+            path = path.first(self.movement_points)
+            if path.any?
+              messages << "Snail moves to #{path[-1].inspect}"
+              path = self.move(path[-1])
+              path = add_directions(path)
+            end
+          end
+        rescue => er
+          logger.info "Caught error while moving #{self.name}: #{er.message}"
+          logger.info er.backtrace[0..10]
+        end
+      else
+        path = []
       end
       messages << self.finish_turn
       return messages, {"character_#{self.id}" => path}
