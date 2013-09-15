@@ -68,11 +68,12 @@ class Character < ActiveRecord::Base
   #before_update :check_for_level
 
   def check_for_level
+    messages = []
     until self.exp <= self.level_up_target and self.level <= LEVEL_CAP
-      message = self.level_up(false)
+      messages << self.level_up(false)
       self.level_up_target *= LEVEL_UP_TARGET_MULTIPLIER
-      message
     end
+    messages
   end
 
   def level_up(save=true)
@@ -163,10 +164,11 @@ HTML
       end
     end
     path
+    path
   end
 
   def finish_turn
-    messages = effects.collect { |e| e.turn }
+    messages = effects.collect { |e| e.turn }.compact
     self.update_attributes(:movement_points => self.speed)
     messages << "#{self.name} finished their turn!"
     messages
@@ -224,7 +226,7 @@ HTML
         last_hit_by_character.update_attribute(:exp, last_hit_by_character.exp + experience)
         messages << last_hit_by_character.check_for_level
         # todo
-        messages
+        messages.compact
       else
         messages = ["#{self.name} has died."]
       end
@@ -251,7 +253,7 @@ HTML
         end
       end
       # move towards player
-      #if move
+      if move
         movement_targets = game.players.select { |x| self.can_see?(x) }
         begin
           if movement_targets.any?
@@ -272,9 +274,9 @@ HTML
           logger.info "Caught error while moving #{self.name}: #{er.message}"
           logger.info er.backtrace[0..10]
         end
-      #else
-      #  path = []
-      #end
+      else
+        path = []
+      end
       messages << self.finish_turn
       return messages, {"character_#{self.id}" => path}
     else

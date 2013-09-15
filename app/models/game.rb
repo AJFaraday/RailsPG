@@ -87,7 +87,7 @@ class Game < ActiveRecord::Base
     messages = clear_dead(messages)
     # Move to next players turn
     update_attributes(:current_character_id => (player_order[(player_order.index(current_character_id) + 1)] || player_order[0]))
-    messages << "It's #{current_character.name}'s turn."
+    messages << "<b>It's #{current_character.name}'s turn.<b/>"
 
     return messages.flatten, paths
   end

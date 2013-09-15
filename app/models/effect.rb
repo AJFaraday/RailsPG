@@ -17,15 +17,16 @@ class Effect < ActiveRecord::Base
   # attribute effects just stick around, repeat effects do something every turn
   def turn
     if attribute_effect or repeat_effect
-      self.turn_effect if repeat_effect
+      message = self.turn_effect if repeat_effect
       self.turns_remaining -= 1
       if self.turns_remaining <= 0
         self.destroy
       else
         self.save
       end
+      message
     else
-      ["Effect doesn't have a related skill effect."]
+      "Effect doesn't have a related skill effect."
     end
   end
 
@@ -42,7 +43,6 @@ class Effect < ActiveRecord::Base
                                   :last_hit_by_character_id => source_character_id)
       @message = "  #{"Critical " if critical}#{repeat_effect.name}: #{target_trait} #{"+" if turn_amount > 0}#{turn_amount.to_i}\n"
     end
-    puts @message
     @message
   end
 

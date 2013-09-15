@@ -51,7 +51,7 @@ TEXT
       source_character.update_attribute(:skill, (source_character.skill - self.skill_cost))
       messages = ["#{source_character.name} uses #{label} on #{target_character.name}"]
       skill_effects.each{|effect|messages << effect.use(source_character,target_character)}
-      messages
+      messages.flatten
     end
   end
 
