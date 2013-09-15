@@ -67,6 +67,7 @@ class Game < ActiveRecord::Base
       self.character_ids_to_remove << character.id
       messages << character.kill
     end
+    messages
   end
 
   def finish_turn
@@ -75,7 +76,7 @@ class Game < ActiveRecord::Base
     # end the players turn
     messages << current_character.finish_turn
     # Check for dead characters
-    clear_dead(messages)
+    messages = clear_dead(messages)
     # run automatic turns for enemis
     current_character.current_level.enemies.where(:game_id => self.id).each do |enemy|
       message, path = enemy.automatic_turn
@@ -83,7 +84,7 @@ class Game < ActiveRecord::Base
       paths << path
     end
     # Check for dead characters
-    clear_dead(messages)
+    messages = clear_dead(messages)
     # Move to next players turn
     update_attributes(:current_character_id => (player_order[(player_order.index(current_character_id) + 1)] || player_order[0]))
     messages << "It's #{current_character.name}'s turn."

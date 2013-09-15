@@ -17,7 +17,7 @@ class RepeatEffect < SkillEffect
       if critical
         amount *= CRITICAL_MULTIPLIER
       end
-      messages << "  #{"Critical " if critical}#{name}: #{target_trait} #{"+"if amount >= 0}#{amount.to_i}\n"
+      messages << "  #{"Critical " if critical}#{name}: #{target_trait} #{"+"if amount >= 0}#{amount.to_i}"
       Effect.create!(:character_id => target_character.id,
                      :amount => amount,
                      :source_character_id => source.id,

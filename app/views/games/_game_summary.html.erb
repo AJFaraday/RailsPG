@@ -1,0 +1,12 @@
+<div class='game_summary'>
+  <h3><%= @game.adventure.name %> - Started <%= short_date(@game.created_at) %></h3>
+  <h4>Players</h4>
+  <% game.players.each do |player| %>
+    <b><%= player.name %></b><br/>
+    <b>Level</b> <%= player.level %><br/>
+    <b>Health</b> <%= player.health %>/<%= player.max_health %><br/>
+    <b>skill</b> <%= player.skill %>/<%= player.max_skill %><br/>
+  <% end %>
+  <%= link_to "Play", play_game_path(:id => game.id), :class => 'btn btn-success' %>
+  <%= link_to "Delete", game_path(:id => game.id), :class => 'btn btn-danger', :method => :delete %>
+</div>

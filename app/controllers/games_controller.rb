@@ -4,8 +4,20 @@ class GamesController < ApplicationController
 
   # redirects to current game in play
   def index
-    redirect_to play_game_path(@current_game)
+    @games = Game.find_all_by_ip_address(request.remote_ip)
   end
+
+  def destroy
+    @game = Game.find(params[:id])
+    @game.destroy
+    flash[:message] = "Successfully deleted that game."
+    if Game.find_all_by_ip_address(request.remote_ip).any?
+      redirect_to games_path
+    else
+      redirect_to adventures_path
+    end
+  end
+
 
   def new
     if params[:adventure_id] and @adventure = Adventure.find(params[:adventure_id])
@@ -18,6 +30,15 @@ class GamesController < ApplicationController
   end
 
   def play
+    if params[:id]
+      @game = Game.find(params[:id])
+      unless @game == @current_game
+        Game.find_all_by_ip_address_and_current(request.remove_ip,true).each do |game|
+          game.update_attribute :current, false
+        end
+        @game.update_attribute :current, true
+      end
+    end
     unless @current_game
       flash[:notice] = "You have no current games, choose an adventure to start one."
       redirect_to adventures_path

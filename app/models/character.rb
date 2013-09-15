@@ -251,7 +251,7 @@ HTML
         end
       end
       # move towards player
-      if move
+      #if move
         movement_targets = game.players.select { |x| self.can_see?(x) }
         begin
           if movement_targets.any?
@@ -263,7 +263,7 @@ HTML
             path.pop
             path = path.first(self.movement_points)
             if path.any?
-              messages << "Snail moves to #{path[-1].inspect}"
+              messages << "#{self.name} moves to #{path[-1].inspect}"
               path = self.move(path[-1])
               path = add_directions(path)
             end
@@ -272,9 +272,9 @@ HTML
           logger.info "Caught error while moving #{self.name}: #{er.message}"
           logger.info er.backtrace[0..10]
         end
-      else
-        path = []
-      end
+      #else
+      #  path = []
+      #end
       messages << self.finish_turn
       return messages, {"character_#{self.id}" => path}
     else
