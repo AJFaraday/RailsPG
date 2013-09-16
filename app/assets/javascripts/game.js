@@ -38,6 +38,12 @@ function move(element_selector, coord) {
   }
 }
 
+function spawn_character(coord, level, html){
+  var table = $("#lvl_"+level)
+  var target_cell = table[0].rows[coord[1] - 1].cells[coord[0] - 1];
+  $(target_cell)  .append(html);
+}
+
 function show_message(message) {
   $('#play_messages').prepend(message + "<br/>")
 }

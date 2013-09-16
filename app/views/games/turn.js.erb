@@ -5,6 +5,16 @@ $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
 
 <%= @extra_js if @extra_js %>
 
+<% if @created_characters and @created_characters.any? %>
+  <% @created_characters.each do |character| %>
+    <!-- add freshly created characters to the board-->
+    spawn_character(<%= character.coord.inspect %>,
+                    <%= character.level_id%>,
+                    '<%=escape_javascript render :partial => 'character_token', :locals => {:character => character} %>'
+    );
+  <% end %>
+<% end %>
+
 <!-- enemies movements take place -->
 <% times = [] %>
 <% if @paths and @paths.any? %>
@@ -44,6 +54,7 @@ $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
     <% times << 1500 %>
   <% end %>
 <% end %>
+
 
 
 setTimeout(function(){<%= @game.current_character.current_turn_js_call%>},<%= times.max || 0 %>);

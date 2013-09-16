@@ -58,7 +58,8 @@ class GamesController < ApplicationController
   end
 
   def turn
-    # skill 
+    characters = @game.characters.collect{|x|x.id}
+    # skill
     case params[:skill]
       when "end"
         @messages, @paths = @game.finish_turn
@@ -70,6 +71,8 @@ class GamesController < ApplicationController
         messages, @paths = @game.finish_turn
         @messages = [@messages, messages].flatten
     end
+    @game.reload
+    @created_characters = @game.characters.where(["id not in (?)",characters])
   end
 
   def get_game

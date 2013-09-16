@@ -12,6 +12,10 @@ class SpawnEffect < SkillEffect
     messages << "#{name} spawned. Level: #{level.to_i}"
     Character.create!(:player => source_character.player,
                       :character_class_id => spawn_character_class.id,
+                      :game_id => source.game_id,
+                      :level_id => source.level_id,
+                      :row => source.row,
+                      :column => source.column,
                       :name => name,
                       :level => level)
     messages 

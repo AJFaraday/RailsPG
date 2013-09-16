@@ -15,6 +15,7 @@ class Adventure < ActiveRecord::Base
 
 
   def Adventure.create_from_folder(path)
+    puts "Creating adventure from #{path}"
     transaction do
       spec = YAML.load_file("#{Rails.root}/#{path}/specification.yml")
       adventure = Adventure.create!(:name => spec['name'],
@@ -83,7 +84,7 @@ class Adventure < ActiveRecord::Base
                                              :character_class_id => CharacterClass.find_by_name(enemy_spec['class']).id,
                                              :player => false,
                                              :row => position[1],
-                                             :column => position[0], 
+                                             :column => position[0],
                                              :adventure_id => adventure.id)
             enemy_spec['skills'].each do |skill_spec|
               enemy.character_skills.create!(:level => skill_spec['level'],
@@ -92,14 +93,16 @@ class Adventure < ActiveRecord::Base
           end
         end
 
-        @exit_positions.each_with_index do |position, index|
-          if position
+        if @exit_positions and @exit_positions.any?
+          @exit_positions.each_with_index do |position, index|
+            if position
 
-            index -= 1
-            door_spec = level_spec['doors'][index]
-            door_specs << door_spec.merge({'level' => internal_name,
-                                           'row' => position[1],
-                                           'column' => position[0]})
+              index -= 1
+              door_spec = level_spec['doors'][index]
+              door_specs << door_spec.merge({'level' => internal_name,
+                                             'row' => position[1],
+                                             'column' => position[0]})
+            end
           end
         end
 

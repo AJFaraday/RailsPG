@@ -169,6 +169,7 @@ HTML
 
   def finish_turn
     messages = effects.collect { |e| e.turn }.compact
+    self.skill += 1 unless self.skill >= self.max_skill #TODO more advanced decision here
     self.update_attributes(:movement_points => self.speed)
     messages << "#{self.name} finished their turn!"
     messages
@@ -197,7 +198,6 @@ HTML
     hit_player = !skill.offensive
     hit_player = !hit_player if !self.player
     targets = Character.where(:player => hit_player,
-                              :level_id => level_id,
                               :game_id => game.id)
     targets.select { |target| (grid.simple_distance_from(self, target) <= skill.range) and self.can_see?(target) }
   end
@@ -241,19 +241,23 @@ HTML
   def automatic_turn
     messages = []
     move = true
+    attacked = false
     if self.game
       # attack if applicable
       skls = self.skills.where("skill_cost <= #{self.skill}").shuffle
       skls.each do |skl|
-        targets = skill_targets(skl)
-        if targets.any?
-          target = targets.shuffle.first
-          messages << use_skill(skl, target)
-          move = false
+        unless attacked
+          targets = skill_targets(skl)
+          if targets.any?
+            target = targets.shuffle.first
+            messages << use_skill(skl, target)
+            move = false
+            attacked = true
+          end
         end
       end
       # move towards player
-      if move
+      if move and self.movement_points > 0
         movement_targets = game.players.select { |x| self.can_see?(x) }
         begin
           if movement_targets.any?
