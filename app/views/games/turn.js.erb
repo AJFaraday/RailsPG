@@ -43,6 +43,7 @@ $('.turn_menu').html('<%= escape_javascript render :partial => 'turn_menu' %>');
 <% @game.current_level.characters.each do |character| %>
   set_health(<%= character.id%>, <%= character.health_percent %>);
   set_skill(<%= character.id%>, <%= character.skill_percent %>);
+  $('#character_<%= character.id%>').attr('title','<%= escape_javascript character.tooltip %>');
 <% end %>
 
 <!-- remove dead characters from the board -->
