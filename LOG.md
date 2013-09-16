@@ -208,3 +208,10 @@ complexity where I can reproduce this problem multiple times, but I`m not sure w
 except that the returning javascript has an error, and isn`t taking action. But it`s getting there.
 
 It`s always getting there.
+
+2013-09-16 - Evening
+--------------------
+
+It`s kind of reached the point where you can play the first game. I`ve still got plenty to do, but for now this is a start.
+
+I think it may be time to try and get this tried out.
