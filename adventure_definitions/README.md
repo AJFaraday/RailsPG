@@ -9,11 +9,11 @@ Each definition consists of:
 * specification.yml
 * one or more play space .csv files
 
-The CSV files define a play area with these keys (n denotes a number from 1 upwards):
+The CSV files define a play area with these keys (N denotes a number from 1 upwards):
 
-* pn: a player starting position.
-* en: an enemy starting position.
-* dn: a doorway to another play space
+* pN: a player starting position.
+* eN: an enemy starting position.
+* dN: a doorway to another play space
 * o: an obstacle
 * (empty cells): passable space
 
@@ -25,7 +25,7 @@ The specification should contain:
 ** Name
 ** Rows
 ** Columns
-** Filename
+** Filename (.csv file in the same folder)
 ** Enemies
 *** Name
 *** Class
@@ -41,5 +41,4 @@ The specification should contain:
 *** Destination (play space)
 
 Notes:
-* This really is just speculation at this stage - 2013-08-20
 * look at /adventure_definitions/00-snails-on-rails/specification.yml
